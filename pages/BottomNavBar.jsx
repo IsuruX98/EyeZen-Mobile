@@ -17,7 +17,7 @@ const profile = "Profile";
 
 const Tab = createBottomTabNavigator();
 
-const BottomNavBar = () => {
+const BottomNavBar = ({navigation}) => {
     return (
         <NavigationContainer independent={true}>
             <Tab.Navigator
@@ -55,9 +55,10 @@ const BottomNavBar = () => {
                 />
                 <Tab.Screen
                     name={eyeCareSections}
-                    component={EyeCareSections}
                     options={{ headerShown: false }}
-                />
+                >
+                    {props => <EyeCareSections {...props} navigation={navigation} />}
+                </Tab.Screen>
                 <Tab.Screen
                     name={doctorContact}
                     component={DoctorContact}

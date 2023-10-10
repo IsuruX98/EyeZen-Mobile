@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     forgot: {
         fontSize: 13,
     }, loginButton: {
-        backgroundColor: "#004AAD", padding: 10, width: "100%", alignItems: "center", borderRadius: 10,
+        backgroundColor: "#004AAD", padding: 15, width: "100%", alignItems: "center", borderRadius: 10,
     }, buttonText: {
         color: "white", fontWeight: "bold",
     }, signupText: {

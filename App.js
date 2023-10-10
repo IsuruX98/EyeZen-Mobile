@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BottomNavBar from "./pages/BottomNavBar";
+import AyurvedicEyeCareHome from "./pages/AyurvedicEyeCareHome";
+import AyurvedicVideo from "./pages/AyurvedicVideo"; // Import the component
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +24,21 @@ const App = () => {
               component={Register}
               options={{ headerShown: false }}
           />
-          <Stack.Screen name="EyeZen" component={BottomNavBar} />
+          <Stack.Screen
+              name="EyeZen"
+              component={BottomNavBar}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="AyurvedicEyeCareHome" // Specify the screen name
+              component={AyurvedicEyeCareHome} // Specify the component
+              options={{ headerShown: false }}
+          />
+            <Stack.Screen
+                name="AyurvedicVideo" // Specify the screen name
+                component={AyurvedicVideo} // Specify the component
+                options={{ headerShown: false }}
+            />
         </Stack.Navigator>
       </NavigationContainer>
   );
