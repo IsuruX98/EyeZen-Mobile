@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const Home = () => {
+const EyeCareSections = () => {
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>Home Screen</Text>
+            <Text>Eye Care Screen</Text>
         </View>
     );
 };
 
-export default Home;
+export default EyeCareSections;
