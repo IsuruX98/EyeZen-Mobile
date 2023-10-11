@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const AyurvedicDoctorContact = () => {
+const AyurvedicDoctorContact = ({navigation}) => {
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text>Ayurvedic Doctor Contact Screen</Text>

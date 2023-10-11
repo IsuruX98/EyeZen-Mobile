@@ -61,9 +61,10 @@ const BottomNavBar = ({navigation}) => {
                 </Tab.Screen>
                 <Tab.Screen
                     name={doctorContact}
-                    component={DoctorContact}
                     options={{ headerShown: false }}
-                />
+                >
+                    {props => <DoctorContact {...props} navigation={navigation} />}
+                </Tab.Screen>
                 <Tab.Screen
                     name={profile}
                     component={Profile}
