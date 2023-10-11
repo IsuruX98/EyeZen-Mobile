@@ -67,9 +67,10 @@ const BottomNavBar = ({navigation}) => {
                 </Tab.Screen>
                 <Tab.Screen
                     name={profile}
-                    component={Profile}
                     options={{ headerShown: false }}
-                />
+                >
+                    {props => <Profile {...props} navigation={navigation} />}
+                </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
     );

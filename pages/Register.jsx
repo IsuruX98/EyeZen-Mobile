@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -7,14 +10,38 @@ const Register = ({ navigation }) => {
     const [mobile, setMobile] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleRegister = () => {
-        // Implement your registration logic here
-        // For example, you can use Firebase authentication
+    const handleRegister = async () => {
+        try {
+            setLoading(true);
+            const userCredential = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+            const userEmail = userCredential.user.email;
 
-        // After successful registration, navigate to the Home screen
-        navigation.navigate('Home');
+            // Store user data in Firestore using email as the document ID
+            await setDoc(doc(FIRESTORE_DB, 'users', userEmail), {
+                name: name,
+                email: userEmail, // Store the email as a field (optional)
+                mobile: mobile,
+            });
+
+            // Navigate to Home screen after successful registration
+            navigation.navigate('Login');
+        } catch (error) {
+            console.error(error.message);
+            // Handle registration errors (display error messages, etc.)
+        } finally {
+            setLoading(false);
+        }
     };
+
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#007BFF" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -53,7 +80,7 @@ const Register = ({ navigation }) => {
                 value={confirmPassword}
             />
 
-            <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate("EyeZen")}>
+            <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
                 <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("Login")}>
