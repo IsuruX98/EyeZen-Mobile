@@ -1,51 +1,70 @@
-import React, {useState} from "react";
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH } from "../firebaseConfig";
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false); // Add loading state
 
-    const handleLogin = () => {
-        // Implement your login logic here
-        // For example, you can use Firebase authentication
-
-        // After successful login, navigate to the Home screen
-        navigation.navigate('Home');
+    const handleLogin = async () => {
+        try {
+            setLoading(true); // Set loading to true when login starts
+            await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+            // If login is successful, navigate to the Home screen
+            navigation.navigate('EyeZen');
+        } catch (error) {
+            console.error(error.message);
+            // Handle login errors (display error messages, etc.)
+        } finally {
+            setLoading(false); // Set loading to false when login operation is done (success or error)
+        }
     };
 
-    return (<View style={styles.container}>
-        <Image
-            source={require('../assets/logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="Email"
-            onChangeText={text => setEmail(text)}
-            value={email}
-        />
-        <TextInput
-            style={styles.input}
-            placeholder="Password"
-            secureTextEntry
-            onChangeText={text => setPassword(text)}
-            value={password}
-        />
-        <View style={styles.forgotPassword}>
-            <TouchableOpacity
-                onPress={() => navigation.navigate("ResetPasswordScreen")}
-            >
-                <Text style={styles.forgot}>Forgot your password?</Text>
+    if (loading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#007BFF" />
+            </View>
+        );
+    }
+
+    return (
+        <View style={styles.container}>
+            <Image
+                source={require('../assets/logo.png')}
+                style={styles.logo}
+                resizeMode="contain"
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Email"
+                onChangeText={text => setEmail(text)}
+                value={email}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={text => setPassword(text)}
+                value={password}
+            />
+            <View style={styles.forgotPassword}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("ResetPasswordScreen")}
+                >
+                    <Text style={styles.forgot}>Forgot your password?</Text>
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
             </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate("EyeZen")}>
-            <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
-        </TouchableOpacity>
-    </View>);
+    );
 };
 
 const styles = StyleSheet.create({
@@ -79,5 +98,6 @@ const styles = StyleSheet.create({
         marginTop: 20, color: "#333333", fontWeight: "bold",
     },
 });
+
 
 export default Login;
