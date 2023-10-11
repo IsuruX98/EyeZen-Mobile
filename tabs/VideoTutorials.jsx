@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    Image,
+    ActivityIndicator
+} from "react-native";
 import Axios from "../apis/axios";
 
 const VideoTutorials = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedType, setSelectedType] = useState("All Types");
     const [videoData, setVideoData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         Axios.get("videoTutorial")
             .then((response) => {
                 setVideoData(response.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
+                setLoading(false);
             });
     }, []);
 
-    // Filter videos based on search query and selected type
     const filteredVideos = videoData.filter((video) => {
         return (
             (video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -26,12 +37,17 @@ const VideoTutorials = ({ navigation }) => {
         );
     });
 
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" color="#007BFF" />
+            </View>
+        );
+    }
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Video Tutorials</Text>
-            </View>
+            <Text style={{color:"#004AAD",fontWeight:"900",fontSize:40,paddingBottom:20}}>Video Tutorials</Text>
 
             {/* Search Input */}
             <TextInput

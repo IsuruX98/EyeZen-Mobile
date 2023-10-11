@@ -20,7 +20,7 @@ const DoctorContact = ({navigation}) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              // navigation.navigate("DoctorList");
+              navigation.navigate("DoctorList");
             }}
           >
             <Text style={styles.buttonText}>Doctor List</Text>

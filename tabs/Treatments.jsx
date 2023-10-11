@@ -7,6 +7,7 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
+    ActivityIndicator
 } from "react-native";
 import Axios from "../apis/axios";
 
@@ -14,14 +15,17 @@ const Treatments = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedType, setSelectedType] = useState("All Types");
     const [treatmentsData, setTreatmentsData] = useState([]);
+    const [loading, setLoading] = useState(true); // Set loading state initially to true
 
     useEffect(() => {
         Axios.get("treatments")
             .then((response) => {
                 setTreatmentsData(response.data);
+                setLoading(false); // Set loading to false once data is fetched
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
+                setLoading(false); // Set loading to false in case of an error
             });
     }, []);
 
@@ -33,20 +37,23 @@ const Treatments = () => {
         return isMatchingType && isMatchingQuery;
     });
 
-    const uniqueTypes = Array.from(new Set(treatmentsData.map((treatment) => treatment.type)));
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" color="#007BFF" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Ayurvedic Treatments</Text>
-            </View>
+            <Text style={{color:"#004AAD",fontWeight:"900",fontSize:40,paddingBottom:20}}>Ayurvedic Treatments</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Search by title or description"
                 value={searchQuery}
                 onChangeText={(text) => setSearchQuery(text)}
             />
-
             <View style={styles.view1}>
             <FlatList
                 data={filteredTreatments}
@@ -60,7 +67,6 @@ const Treatments = () => {
                         />
                         <Text style={styles.title}>{item.title}</Text>
                         <Text style={styles.description}>{item.description}</Text>
-
                     </TouchableOpacity>
                 )}
                 contentContainerStyle={styles.flatListContent}

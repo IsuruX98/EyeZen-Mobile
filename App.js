@@ -8,6 +8,9 @@ import BottomNavBar from "./pages/BottomNavBar";
 import AyurvedicEyeCareHome from "./pages/AyurvedicEyeCareHome";
 import AyurvedicVideo from "./pages/AyurvedicVideo";
 import Map from "./pages/Map";
+import DoctorList from "./pages/DoctorList";
+import DoctorDetails from "./pages/DoctorDetails";
+import DoctorPin from "./pages/DoctorPin";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,20 +34,38 @@ const App = () => {
               options={{ headerShown: false }}
           />
           <Stack.Screen
-              name="AyurvedicEyeCareHome" // Specify the screen name
-              component={AyurvedicEyeCareHome} // Specify the component
+              name="AyurvedicEyeCareHome"
+              component={AyurvedicEyeCareHome}
               options={{ headerShown: false }}
           />
             <Stack.Screen
-                name="AyurvedicVideo" // Specify the screen name
-                component={AyurvedicVideo} // Specify the component
+                name="AyurvedicVideo"
+                component={AyurvedicVideo}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="Map" // Specify the screen name
-                component={Map} // Specify the component
+                name="Map"
+                component={Map}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name="DoctorList"
+                component={DoctorList}
+                options={({ navigation }) => ({
+                    headerShown: false,
+                    screenProps: { navigation }, // Pass navigation as a screen prop
+                })}
+            />
+          <Stack.Screen
+              name="DoctorDetails"
+              component={DoctorDetails}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="DoctorPin"
+              component={DoctorPin}
+              options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
   );
