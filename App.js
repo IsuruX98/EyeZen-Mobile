@@ -6,7 +6,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import BottomNavBar from "./pages/BottomNavBar";
 import AyurvedicEyeCareHome from "./pages/AyurvedicEyeCareHome";
-import AyurvedicVideo from "./pages/AyurvedicVideo"; // Import the component
+import AyurvedicVideo from "./pages/AyurvedicVideo";
+import Map from "./pages/Map";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ const App = () => {
             <Stack.Screen
                 name="AyurvedicVideo" // Specify the screen name
                 component={AyurvedicVideo} // Specify the component
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Map" // Specify the screen name
+                component={Map} // Specify the component
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

@@ -3,8 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import doctorContactImage from "../assets/ayurvrdic/doctorcontact.png";
 import { useNavigation } from "@react-navigation/native";
 
-const DoctorContact = () => {
-  const navigation = useNavigation();
+const DoctorContact = ({navigation}) => {
 
   return (
     <View style={styles.container}>
@@ -29,7 +28,7 @@ const DoctorContact = () => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              // navigation.navigate("DoctorMap");
+              navigation.navigate("Map");
             }}
           >
             <Text style={styles.buttonText}>View Map</Text>
