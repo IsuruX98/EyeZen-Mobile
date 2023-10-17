@@ -50,9 +50,10 @@ const BottomNavBar = ({navigation}) => {
                 />
                 <Tab.Screen
                     name={testsAndGames}
-                    component={TestsAndGames}
                     options={{ headerShown: false }}
-                />
+                >
+                    {props => <TestsAndGames {...props} navigation={navigation} />}
+                </Tab.Screen>
                 <Tab.Screen
                     name={eyeCareSections}
                     options={{ headerShown: false }}

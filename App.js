@@ -23,6 +23,8 @@ import UpdateTreatment from "./pages/UpdateTreatments";
 import AddVideoTutorial from "./pages/AddVideoTutorial";
 import UpdateVideoTutorial from "./pages/UpdateVideoTutorial";
 import UpdateDoctor from "./pages/UpdateDoctor";
+import NearSightedTest from "./pages/NearSightedTest";
+import FarSightedTest from "./pages/FarSightedTest";
 
 const Stack = createNativeStackNavigator();
 
@@ -136,6 +138,16 @@ const App = () => {
           <Stack.Screen
               name="UpdateDoctor"
               component={UpdateDoctor}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="NearSightedTest"
+              component={NearSightedTest}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="FarSightedTest"
+              component={FarSightedTest}
               options={{ headerShown: false }}
           />
         </Stack.Navigator>
