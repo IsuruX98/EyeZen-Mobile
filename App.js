@@ -18,6 +18,11 @@ import AdminDoctorList from "./pages/AdminDoctorList";
 import AddDoctor from "./pages/AddDoctor";
 import AdminTreatmentList from "./pages/AdminTreatmentList";
 import AdminVideoTutorialList from "./pages/AdminVideoTutorialList";
+import AddTreatment from "./pages/AddTreatment";
+import UpdateTreatment from "./pages/UpdateTreatments";
+import AddVideoTutorial from "./pages/AddVideoTutorial";
+import UpdateVideoTutorial from "./pages/UpdateVideoTutorial";
+import UpdateDoctor from "./pages/UpdateDoctor";
 
 const Stack = createNativeStackNavigator();
 
@@ -106,6 +111,31 @@ const App = () => {
           <Stack.Screen
               name="AdminVideoTutorialList"
               component={AdminVideoTutorialList}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="AddTreatment"
+              component={AddTreatment}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="UpdateTreatment"
+              component={UpdateTreatment}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="AddVideoTutorial"
+              component={AddVideoTutorial}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="UpdateVideoTutorial"
+              component={UpdateVideoTutorial}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="UpdateDoctor"
+              component={UpdateDoctor}
               options={{ headerShown: false }}
           />
         </Stack.Navigator>

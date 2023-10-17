@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Axios from "../apis/axios";
 
-const AdminVideoTutorialList = () => {
+const AdminVideoTutorialList = ({navigation}) => {
     const [videoTutorials, setVideoTutorials] = useState([]);
     const [filteredVideoTutorials, setFilteredVideoTutorials] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -91,7 +91,7 @@ const AdminVideoTutorialList = () => {
             />
             <TouchableOpacity
                 style={styles.addButton}
-                onPress={() => navigation.navigate('AddVideo')}
+                onPress={() => navigation.navigate('AddVideoTutorial')}
             >
                 <Text style={styles.addButtonText}>Add Video</Text>
             </TouchableOpacity>
@@ -108,7 +108,9 @@ const AdminVideoTutorialList = () => {
                         <TouchableOpacity
                             style={styles.updateButton}
                             onPress={() => {
-                                // Navigate to the update screen, you can implement this logic based on your navigation setup
+                                navigation.navigate("UpdateVideoTutorial", {
+                                    videoTutorialDetails : item,
+                                })
                             }}
                         >
                             <Text style={styles.buttonText}>Update</Text>
