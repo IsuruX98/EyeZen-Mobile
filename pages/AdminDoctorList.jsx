@@ -58,16 +58,7 @@ const AdminDoctorList = ({ route, navigation }) => {
             {
                 text: "Delete",
                 onPress: () => {
-                    // Make API call to delete the doctor with the given email
-                    // Update the doctorData state after successful deletion
-                    // For example:
-                    // Axios.delete(`doctors/${email}`)
-                    //   .then(() => {
-                    //     setDoctorData(doctorData.filter((doctor) => doctor.email !== email));
-                    //   })
-                    //   .catch((error) => {
-                    //     console.error("Error deleting doctor:", error);
-                    //   });
+
                 },
                 style: "destructive",
             },
@@ -111,7 +102,9 @@ const AdminDoctorList = ({ route, navigation }) => {
                         </View>
                         <TouchableOpacity
                             style={styles.viewButton}
-                            onPress={() => navigation.navigate("DoctorDetails", { email: item.email })}
+                            onPress={() => navigation.navigate("UpdateDoctor", {
+                                doctorDetails : item,
+                            })}
                         >
                             <Text style={styles.viewButtonText}>Update</Text>
                         </TouchableOpacity>

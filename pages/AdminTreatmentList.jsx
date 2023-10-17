@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Axios from "../apis/axios";
 
-const AdminTreatmentList = () => {
+const AdminTreatmentList = ({navigation}) => {
     const [treatmentData, setTreatmentData] = useState([]);
     const [filteredTreatments, setFilteredTreatments] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
@@ -92,7 +92,7 @@ const AdminTreatmentList = () => {
             />
             <TouchableOpacity
                 style={styles.addButton}
-                onPress={() => navigation.navigate('AddDoctor')}
+                onPress={() => navigation.navigate('AddTreatment')}
             >
                 <Text style={styles.addButtonText}>Add Treatment</Text>
             </TouchableOpacity>
@@ -108,9 +108,11 @@ const AdminTreatmentList = () => {
                         </View>
                         <TouchableOpacity
                             style={styles.updateButton}
-                            onPress={() => {
-                                // Navigate to the update screen, you can implement this logic based on your navigation setup
-                            }}
+                            onPress={() =>
+                                navigation.navigate("UpdateTreatment", {
+                                    treatmentDetails: item,
+                                })
+                            }
                         >
                             <Text style={styles.buttonText}>Update</Text>
                         </TouchableOpacity>
