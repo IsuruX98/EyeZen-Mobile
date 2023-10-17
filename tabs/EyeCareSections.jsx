@@ -26,7 +26,7 @@ const EyeCareSections = ({ navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              // navigation.navigate("DoctorMap");
+              navigation.navigate("InfantQuizHome");
             }}
           >
             <Text style={styles.buttonText}>Infant Eye Care</Text>
