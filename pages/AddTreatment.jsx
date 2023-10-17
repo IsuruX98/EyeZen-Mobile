@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,Keyboard,TouchableWithoutFeedback  } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Keyboard,
+    TouchableWithoutFeedback,
+    ActivityIndicator,
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import axios from '../apis/axios';
-import Axios from 'axios';
+import axios from 'axios';
+import AxiosApi from '../apis/axios';
 
 const AddTreatment = () => {
     const [treatmentInfo, setTreatmentInfo] = useState({
         title: '',
         type: '',
         description: '',
-        photoUrl: '', // Image URL will be stored here
+        photo: null,
+        photoUrl: '',
     });
     const [loading, setLoading] = useState(false);
 
@@ -30,19 +40,32 @@ const AddTreatment = () => {
         let result = await ImagePicker.launchImageLibraryAsync();
 
         if (!result.cancelled) {
+            const selectedImageUri = result.assets[0].uri;
+            setTreatmentInfo({ ...treatmentInfo, photo: selectedImageUri });
+        }
+    };
+
+    console.log(treatmentInfo.photo)
+
+    const handleSubmit = async () => {
+        setLoading(true);
+
+        if (treatmentInfo.photo) {
             const formData = new FormData();
             formData.append('file', {
-                uri: result.uri,
+                uri: treatmentInfo.photo,
                 type: 'image/jpeg',
                 name: 'photo.jpg',
             });
             formData.append('upload_preset', 'upload');
 
             try {
-                const cloudinaryResponse = await Axios.post(
+                const cloudinaryResponse = await axios.post(
                     'https://api.cloudinary.com/v1_1/dpgelkpd4/image/upload',
                     formData
                 );
+                const imageUrl = cloudinaryResponse.data.secure_url;
+                console.log('Image URL:', imageUrl);
 
                 if (cloudinaryResponse.data && cloudinaryResponse.data.secure_url) {
                     setTreatmentInfo({ ...treatmentInfo, photoUrl: cloudinaryResponse.data.secure_url });
@@ -53,30 +76,19 @@ const AddTreatment = () => {
                 console.log('Error uploading image:', error);
             }
         }
-    };
-
-    const handleSubmit = async () => {
-        setLoading(true);
 
         try {
-            // Send data to your API endpoint
-            const response = await axios.post('treatments', treatmentInfo);
-
-            // Handle the response from the backend
+            const response = await AxiosApi.post('treatments', treatmentInfo);
             console.log('Backend response:', response.data);
-
-            // Reset the form after successful submission
             setTreatmentInfo({
                 title: '',
                 type: '',
                 description: '',
-                photoUrl: '',
+                photo: null,
+                photoUrl: 'default_image.jpg',
             });
-
-            // Show success message to the user
             console.log('Treatment added successfully.');
         } catch (error) {
-            // Handle error
             console.log('Error adding treatment:', error);
         } finally {
             setLoading(false);
@@ -89,34 +101,35 @@ const AddTreatment = () => {
 
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        <View style={styles.container}>
-            <Text style={styles.headerText}>Add Treatments</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Title"
-                value={treatmentInfo.title}
-                onChangeText={(text) => handleInputChange('title', text)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Type"
-                value={treatmentInfo.type}
-                onChangeText={(text) => handleInputChange('type', text)}
-            />
-            <TextInput
-                style={styles.inputMulti}
-                placeholder="Description"
-                value={treatmentInfo.description}
-                onChangeText={(text) => handleInputChange('description', text)}
-                multiline
-            />
-            <TouchableOpacity style={styles.button} onPress={handleImageUpload}>
-                <Text style={styles.buttonText}>Pick an image from gallery</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Add Treatment</Text>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Add Treatments</Text>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Title"
+                    value={treatmentInfo.title}
+                    onChangeText={(text) => handleInputChange('title', text)}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Type"
+                    value={treatmentInfo.type}
+                    onChangeText={(text) => handleInputChange('type', text)}
+                />
+                <TextInput
+                    style={styles.inputMulti}
+                    placeholder="Description"
+                    value={treatmentInfo.description}
+                    onChangeText={(text) => handleInputChange('description', text)}
+                    multiline
+                />
+                <TouchableOpacity style={styles.button} onPress={handleImageUpload}>
+                    <Text style={styles.buttonText}>Pick an image from gallery</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                    <Text style={styles.buttonText}>Add Treatment</Text>
+                </TouchableOpacity>
+                {loading && <ActivityIndicator size="large" color="#004AAD" />}
+            </View>
         </TouchableWithoutFeedback>
     );
 };
@@ -127,7 +140,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 40,
         backgroundColor: '#ffffff',
         alignItems: 'center',
-        justifyContent:"center"
+        justifyContent: 'center',
     },
     headerText: {
         color: '#004AAD',
@@ -167,7 +180,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         textAlign: 'center',
-        fontWeight:"bold"
+        fontWeight: 'bold',
     },
 });
 
