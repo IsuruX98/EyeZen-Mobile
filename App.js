@@ -11,6 +11,13 @@ import Map from "./pages/Map";
 import DoctorList from "./pages/DoctorList";
 import DoctorDetails from "./pages/DoctorDetails";
 import DoctorPin from "./pages/DoctorPin";
+import InfantQuizHome from "./pages/InfantQuizHome";
+import QuestionnaireScreen from "./pages/QuestionnaireScreen";
+import AdminHome from "./pages/AdminHome";
+import AdminDoctorList from "./pages/AdminDoctorList";
+import AddDoctor from "./pages/AddDoctor";
+import AdminTreatmentList from "./pages/AdminTreatmentList";
+import AdminVideoTutorialList from "./pages/AdminVideoTutorialList";
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +71,41 @@ const App = () => {
           <Stack.Screen
               name="DoctorPin"
               component={DoctorPin}
+              options={{ headerShown: false }}
+          />
+            <Stack.Screen
+                name="InfantQuizHome"
+                component={InfantQuizHome}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="InfantQuestionnaire"
+                component={QuestionnaireScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Admin"
+                component={AdminHome}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="AdminDoctorList"
+                component={AdminDoctorList}
+                options={{ headerShown: false }}
+            />
+          <Stack.Screen
+              name="AddDoctor"
+              component={AddDoctor}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="AdminTreatmentList"
+              component={AdminTreatmentList}
+              options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name="AdminVideoTutorialList"
+              component={AdminVideoTutorialList}
               options={{ headerShown: false }}
           />
         </Stack.Navigator>
