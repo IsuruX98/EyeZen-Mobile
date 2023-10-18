@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
-import axios from '../apis/axios';
+import axios from '../../apis/axios';
 
 const InfantQuizHome = ({ navigation }) => {
     const [facts, setFacts] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
     const images = [
-        require('../assets/infant/baby-vision1.jpg'),
-        require('../assets/infant/baby-vision2.jpg'),
-        require('../assets/infant/baby-vision3.jpg'),
+        require('../../assets/infant/baby-vision1.jpg'),
+        require('../../assets/infant/baby-vision2.jpg'),
+        require('../../assets/infant/baby-vision3.jpg'),
     ];
 
     const faqData = [

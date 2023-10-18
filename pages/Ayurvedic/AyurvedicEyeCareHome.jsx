@@ -3,11 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import AyurvedicHome from "../tabs/AyurvedicHome";
-import Treatments from "../tabs/Treatments";
-import VideoTutorials from "../tabs/VideoTutorials";
-import AyurvedicDoctorContact from "../tabs/AyurvedicDoctorContact";
-import EyeCareSections from "../tabs/EyeCareSections";
+import AyurvedicHome from "../../tabs/AyurvedicHome";
+import Treatments from "../../tabs/Treatments";
+import VideoTutorials from "../../tabs/VideoTutorials";
+import AyurvedicDoctorContact from "../../tabs/AyurvedicDoctorContact";
+import EyeCareSections from "../../tabs/EyeCareSections";
 
 const ayurvedicHome = "Ayurvedic Home";
 const treatments = "Treatments";

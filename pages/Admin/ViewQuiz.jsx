@@ -11,7 +11,7 @@ import {
     TouchableWithoutFeedback, StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import axios from '../apis/axios';
+import axios from '../../apis/axios';
 
 const ViewQuiz = ({navigation}) => {
     const [questions, setQuestions] = useState([]);

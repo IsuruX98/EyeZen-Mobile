@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, FlatList, Image, TouchableOpacity, Text, ActivityIndicator, StyleSheet } from "react-native";
-import Axios from "../apis/axios";
+import Axios from "../../apis/axios";
 
 const DoctorList = ({ route, navigation }) => {
     const [doctorData, setDoctorData] = useState([]);

@@ -10,7 +10,7 @@ import {
     StyleSheet,
     Alert,
 } from "react-native";
-import Axios from "../apis/axios";
+import Axios from "../../apis/axios";
 import {useFocusEffect} from "@react-navigation/native";
 
 const AdminDoctorList = ({ route, navigation }) => {

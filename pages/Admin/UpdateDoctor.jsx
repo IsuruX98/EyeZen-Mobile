@@ -13,7 +13,7 @@ import {
     TouchableWithoutFeedback,
 } from 'react-native';
 import axios from 'axios';
-import AxiosAPI from '../apis/axios'
+import AxiosAPI from '../../apis/axios'
 import * as ImagePicker from "expo-image-picker";
 
 const UpdateDoctor = ({ route }) => {

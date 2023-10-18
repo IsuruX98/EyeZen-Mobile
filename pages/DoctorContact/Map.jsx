@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
-import Axios from "../apis/axios";
+import Axios from "../../apis/axios";
 import { useNavigation } from "@react-navigation/native";
 
 const Map = () => {

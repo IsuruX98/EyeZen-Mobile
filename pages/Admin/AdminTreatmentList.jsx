@@ -10,7 +10,7 @@ import {
     Alert,
     ActivityIndicator
 } from "react-native";
-import Axios from "../apis/axios";
+import Axios from "../../apis/axios";
 import { useFocusEffect } from '@react-navigation/native';
 
 const AdminTreatmentList = ({navigation}) => {

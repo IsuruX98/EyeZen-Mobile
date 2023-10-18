@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -12,26 +12,19 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
-import AxiosAPI from '../apis/axios'
-import { Video } from 'expo-av';
+import AxiosAPI from '../../apis/axios'
 
-const UpdateVideoTutorial = ({ route,navigation }) => {
-    const { videoTutorialDetails } = route.params;
+const AddVideoTutorial = () => {
+    const [videoTutorialInfo, setVideoTutorialInfo] = useState({
+        title: '',
+        type: '',
+        description: '',
+    });
     const [loading, setLoading] = useState(false);
     const [photo, setPhoto] = useState(null);
     const [selectedImageUri, setSelectedImageUri] = useState(null);
     const [video, setVideo] = useState(null);
-    const [selectedVideoUri, setSelectedVideoUri] = useState(videoTutorialDetails.videoUrl);
-    const [videoUrl, setVideoUrl] = useState(videoTutorialDetails.videoUrl);
-    const [thumbnailUrl, setThumbnailUrl] = useState(videoTutorialDetails.thumbnailUrl);
-
-    const [videoTutorialInfo, setVideoTutorialInfo] = useState({
-        title: videoTutorialDetails.title,
-        type: videoTutorialDetails.type,
-        description: videoTutorialDetails.description,
-        videoUrl: videoTutorialDetails.videoUrl,
-        thumbnailUrl: videoTutorialDetails.thumbnailUrl
-    });
+    const [selectedVideoUri, setSelectedVideoUri] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -60,9 +53,6 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
         if (!result.canceled) {
             const selectedVideoUri = result.assets[0].uri;
             setSelectedVideoUri(selectedVideoUri);
-            // This variable is not defined anywhere in your code.
-            // You should use selectedVideoUri instead of selectedImageUri.
-            setVideoTutorialInfo({...videoTutorialInfo, videoUrl: selectedVideoUri});
             setVideo(selectedVideoUri);
         }
     };
@@ -76,11 +66,10 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
 
         if (!result.canceled) {
             const selectedImageUri = result.assets[0].uri;
-            setVideoTutorialInfo({...videoTutorialInfo,thumbnailUrl:selectedImageUri})
+            setSelectedImageUri(selectedImageUri);
             setPhoto(selectedImageUri);
         }
     };
-
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -116,26 +105,32 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
                 );
 
                 if (thumbnailResponse.data.secure_url && videoResponse.data.secure_url) {
-
-                    setVideoTutorialInfo({...videoTutorialInfo,thumbnailUrl: thumbnailResponse.data.secure_url,})
-                    setVideoTutorialInfo({...videoTutorialInfo, videoUrl: videoResponse.data.secure_url});
+                    const updatedVideoTutorialInfo = {
+                        ...videoTutorialInfo,
+                        videoUrl: videoResponse.data.secure_url,
+                        thumbnailUrl: thumbnailResponse.data.secure_url,
+                    };
 
                     try {
-                        const response = await AxiosAPI.put(`videoTutorial/${videoTutorialDetails._id}`, videoTutorialInfo);
+                        const response = await AxiosAPI.post('videoTutorial', updatedVideoTutorialInfo);
                         console.log('Backend response:', response.data);
+                        setVideoTutorialInfo({
+                            title: '',
+                            type: '',
+                            description: '',
+                        });
                         setLoading(false);
                         Alert.alert(
                             'Success',
-                            'Tutorial updated successfully.',
+                            'Tutorial added successfully.',
                             [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                         );
-                        navigation.navigate('AdminVideoTutorialList')
                     } catch (error) {
-                        console.log('Error updating Tutorial:', error);
+                        console.log('Error adding Tutorial:', error);
                         setLoading(false);
                         Alert.alert(
                             'Error',
-                            'There was an error updating the Tutorial. Please try again later.',
+                            'There was an error adding the Tutorial. Please try again later.',
                             [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                         );
                     }
@@ -160,27 +155,9 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
         }
     };
 
+
     const dismissKeyboard = () => {
         Keyboard.dismiss();
-    };
-
-    const handleConfirmation = () => {
-        Alert.alert(
-            'Confirm Update',
-            'Are you sure you want to update this video tutorial?',
-            [
-                {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                },
-                {
-                    text: 'OK',
-                    onPress: () => handleSubmit(),
-                },
-            ],
-            { cancelable: false }
-        );
     };
 
     if (loading) {
@@ -194,19 +171,7 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
             <View style={styles.container}>
-                <Text style={styles.headerText}>Update Video Tutorial</Text>
-                {selectedVideoUri && (
-                    <Video
-                        source={{ uri: selectedVideoUri }}
-                        rate={1.0}
-                        volume={1.0}
-                        isMuted={false}
-                        resizeMode="cover"
-                        shouldPlay={false}
-                        useNativeControls
-                        style={{ width: 330, height: 200,marginBottom:25 }} // Set the desired dimensions for the video
-                    />
-                )}
+                <Text style={styles.headerText}>Add Video Tutorial</Text>
                 <TextInput
                     style={styles.input}
                     placeholder="Title"
@@ -232,8 +197,8 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
                 <TouchableOpacity style={styles.button} onPress={handleThumbnailUpload}>
                     <Text style={styles.buttonText}>Upload Thumbnail</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleConfirmation}>
-                    <Text style={styles.buttonText}>Update Video Tutorial</Text>
+                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                    <Text style={styles.buttonText}>Add Video Tutorial</Text>
                 </TouchableOpacity>
             </View>
         </TouchableWithoutFeedback>
@@ -258,7 +223,6 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         fontSize: 32,
         paddingBottom: 30,
-        textAlign:"center"
     },
     input: {
         width: '100%',
@@ -296,4 +260,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default UpdateVideoTutorial;
+export default AddVideoTutorial;
