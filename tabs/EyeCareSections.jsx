@@ -18,6 +18,14 @@ const EyeCareSections = ({ navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
+              navigation.navigate("MainQuiz");
+            }}
+          >
+            <Text style={styles.buttonText}>Main Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
               navigation.navigate("AyurvedicEyeCareHome");
             }}
           >
