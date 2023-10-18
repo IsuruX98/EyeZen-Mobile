@@ -112,6 +112,25 @@ const UpdateTreatment = ({ route,navigation }) => {
         Keyboard.dismiss();
     };
 
+    const handleConfirmation = () => {
+        Alert.alert(
+            'Confirm Update',
+            'Are you sure you want to update this treatment?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'OK',
+                    onPress: () => handleSubmit(),
+                },
+            ],
+            { cancelable: false }
+        );
+    };
+
     if (loading) {
         return (
             <View style={styles.loaderContainer}>
@@ -149,7 +168,7 @@ const UpdateTreatment = ({ route,navigation }) => {
                 <TouchableOpacity style={styles.button} onPress={handleImageUpload}>
                     <Text style={styles.buttonText}>Pick an image from gallery</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <TouchableOpacity style={styles.button} onPress={handleConfirmation}>
                     <Text style={styles.buttonText}>Update Treatment</Text>
                 </TouchableOpacity>
             </View>

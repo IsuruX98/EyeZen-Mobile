@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -8,10 +8,13 @@ import {
     StyleSheet,
     Image,
     ScrollView,
-    Alert
+    Alert,
+    Keyboard,
+    TouchableWithoutFeedback,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
+import AxiosAPI from '../apis/axios'
 
 const DoctorForm = () => {
     const [doctorInfo, setDoctorInfo] = useState({
@@ -33,6 +36,21 @@ const DoctorForm = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [photo, setPhoto] = useState(null);
+    const [selectedImageUri, setSelectedImageUri] = useState(null);
+
+    useEffect(() => {
+        (async () => {
+            const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert(
+                    'Permission Required',
+                    'Sorry, we need camera roll permissions to make this work!',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                );
+            }
+        })();
+    }, []);
 
     const handleInputChange = (name, value) => {
         setDoctorInfo({ ...doctorInfo, [name]: value });
@@ -42,86 +60,123 @@ const DoctorForm = () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [1, 1],
             quality: 1,
         });
 
-        if (!result.cancelled) {
-            handleInputChange('profilePicUrl', result.uri);
+        if (!result.canceled) {
+            const selectedImageUri = result.assets[0].uri;
+            setSelectedImageUri(selectedImageUri);
+            setPhoto(selectedImageUri);
         }
     };
 
     const handleSubmit = async () => {
         setLoading(true);
-        try {
-            // Upload image to Cloudinary
+
+        if (photo) {
             const formData = new FormData();
             formData.append('file', {
-                uri: doctorInfo.profilePicUrl,
-                name: 'profile.jpg',
-                type: 'image/jpg',
+                uri: photo,
+                type: 'image/jpeg',
+                name: 'photo.jpg',
             });
             formData.append('upload_preset', 'upload');
 
-            const response = await axios.post(
-                'https://api.cloudinary.com/v1_1/dpgelkpd4/image/upload',
-                formData
-            );
-
-            console.log(doctorInfo)
-
-            if (response.data && response.data.secure_url) {
-                // Image uploaded successfully to Cloudinary
-                const updatedDoctorInfo = {
-                    ...doctorInfo,
-                    servicesOffered: doctorInfo.servicesOffered
-                        .split(",")
-                        .map((item) => item.trim()),
-                    acceptedPaymentMethods: doctorInfo.acceptedPaymentMethods
-                        .split(",")
-                        .map((item) => item.trim()),
-                    profilePicUrl: response.data.secure_url
-                };
-
-                console.log(updatedDoctorInfo)
-                // Send updatedDoctorInfo object to backend
-                const response = await axios.post(
-                    "doctors",
-                    updatedDoctorInfo
+            try {
+                const cloudinaryResponse = await axios.post(
+                    'https://api.cloudinary.com/v1_1/dpgelkpd4/image/upload',
+                    formData
                 );
 
-                // Handle the response from the backend
-                console.log("Backend response:", response.data);
-                setLoading(false);
+                if (cloudinaryResponse.data && cloudinaryResponse.data.secure_url) {
+
+                    // Split the comma-separated strings into arrays
+                    const updatedDoctorInfo = {
+                        ...doctorInfo,
+                        servicesOffered: doctorInfo.servicesOffered
+                            .split(",")
+                            .map((item) => item.trim()),
+                        acceptedPaymentMethods: doctorInfo.acceptedPaymentMethods
+                            .split(",")
+                            .map((item) => item.trim()),
+                        profilePicUrl: cloudinaryResponse.data.secure_url,
+
+                    };
+
+                    if (updatedDoctorInfo) {
+                        try {
+                            const response = await AxiosAPI.post('doctors', updatedDoctorInfo);
+                            console.log('Backend response:', response.data);
+                            setDoctorInfo({
+                                name: '',
+                                email: '',
+                                mobile: '',
+                                specialization: '',
+                                type: '',
+                                town: '',
+                                latitude: '',
+                                longitude: '',
+                                about: '',
+                                qualifications: '',
+                                experience: '',
+                                servicesOffered: '',
+                                officeHours: '',
+                                acceptedPaymentMethods: '',
+                                profilePicUrl: '',
+                            })
+                            setPhoto(null)
+                            setLoading(false);
+                            Alert.alert(
+                                'Success',
+                                'Doctor added successfully.',
+                                [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                            );
+                        } catch (error) {
+                            console.log('Error adding Doctor:', error);
+                            setLoading(false);
+                            Alert.alert(
+                                'Error',
+                                'There was an error adding the Doctor. Please try again later.',
+                                [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                            );
+                        }
+                    }
+
+
+                } else {
+                    console.log('Image upload failed.');
+                }
+            } catch (error) {
+                console.log('Error uploading image:', error);
                 Alert.alert(
-                    'Success',
-                    'Doctor information added successfully!',
-                    [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
-                );
-            } else {
-                Alert.alert(
-                    'Error',
-                    'Image upload failed..',
-                    [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
+                    'Image Upload Failed',
+                    'There was an error uploading your image. Please try again later.',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                 );
             }
-        } catch (error) {
-            setLoading(false);
-            // Handle error
-            console.error('Error sending data to the backend:', error);
-
-            Alert.alert(
-                'Error',
-                'Failed to add doctor information. Please try again later.',
-                [{ text: 'OK', onPress: () => console.log('OK Pressed') }]
-            );
         }
+
+
     };
 
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
+    if (loading) {
+        return (
+            <View style={styles.loaderContainer}>
+                <ActivityIndicator size="large" color="#007BFF"/>
+            </View>
+        );
+    }
+
     return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <ScrollView>
         <View style={styles.container}>
             <Text style={styles.headerText}>Add Doctor</Text>
+            {photo && <Image source={{ uri: photo }} style={styles.previewImage} />}
             <TextInput
                 style={styles.input}
                 placeholder="Name"
@@ -224,8 +279,6 @@ const DoctorForm = () => {
                 <Text style={styles.buttonText}>Pick an Image</Text>
             </TouchableOpacity>
 
-            {doctorInfo.profilePicUrl && <Image source={{ uri: doctorInfo.profilePicUrl }} style={styles.previewImage} />}
-
             <TouchableOpacity style={styles.addButton} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Add Doctor</Text>
             </TouchableOpacity>
@@ -234,6 +287,7 @@ const DoctorForm = () => {
             <View style={{paddingBottom:100}}></View>
         </View>
         </ScrollView>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -244,6 +298,11 @@ const styles = StyleSheet.create({
         paddingTop: 80,
         backgroundColor: '#ffffff',
         alignItems: 'center',
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
     headerText: {
         color: '#004AAD',
@@ -271,11 +330,11 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     previewImage: {
-        width: 200,
-        height: 200,
-        marginBottom: 16,
-        resizeMode: 'cover',
-        borderRadius: 8,
+        width: 150,
+        height: 150,
+        marginBottom: 35,
+        resizeMode: 'contain',
+        borderRadius: 100,
     },
     addButton: {
         width: '100%',

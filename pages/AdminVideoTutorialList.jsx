@@ -10,6 +10,7 @@ import {
     Alert, ActivityIndicator,
 } from "react-native";
 import Axios from "../apis/axios";
+import { useFocusEffect } from '@react-navigation/native';
 
 const AdminVideoTutorialList = ({navigation}) => {
     const [videoTutorials, setVideoTutorials] = useState([]);
@@ -17,18 +18,29 @@ const AdminVideoTutorialList = ({navigation}) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        Axios.get("videoTutorial")
-            .then((response) => {
-                setVideoTutorials(response.data);
-                setFilteredVideoTutorials(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("Error fetching video tutorial data:", error);
-                setLoading(false);
-            });
-    }, []);
+
+    const fetchVideoTutorialData = async () => {
+        try {
+            const response = await Axios.get("videoTutorial");
+            setVideoTutorials(response.data);
+            setFilteredVideoTutorials(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching video tutorial data:", error);
+            setLoading(false);
+        }
+    };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            // Fetch data here
+            fetchVideoTutorialData();
+
+            return () => {
+                // Clean up if necessary
+            };
+        }, [])
+    );
 
     useEffect(() => {
         if (searchQuery) {

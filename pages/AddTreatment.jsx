@@ -15,7 +15,7 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import AxiosAPI from '../apis/axios'
 
-const AddTreatment = () => {
+const AddTreatment = ({navigation}) => {
     const [treatmentInfo, setTreatmentInfo] = useState({
         title: '',
         type: '',
