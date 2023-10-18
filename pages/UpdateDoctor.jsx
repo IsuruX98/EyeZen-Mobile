@@ -120,15 +120,15 @@ const UpdateDoctor = ({ route }) => {
                             setLoading(false);
                             Alert.alert(
                                 'Success',
-                                'Doctor added successfully.',
+                                'Doctor Updated successfully.',
                                 [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                             );
                         } catch (error) {
-                            console.log('Error adding Doctor:', error);
+                            console.log('Error Updating Doctor:', error);
                             setLoading(false);
                             Alert.alert(
                                 'Error',
-                                'There was an error adding the Doctor. Please try again later.',
+                                'There was an error Updating the Doctor. Please try again later.',
                                 [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                             );
                         }
@@ -153,6 +153,25 @@ const UpdateDoctor = ({ route }) => {
 
     const dismissKeyboard = () => {
         Keyboard.dismiss();
+    };
+
+    const handleConfirmation = () => {
+        Alert.alert(
+            'Confirm Update',
+            'Are you sure you want to update this doctor?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'OK',
+                    onPress: () => handleSubmit(),
+                },
+            ],
+            { cancelable: false }
+        );
     };
 
     if (loading) {
@@ -271,11 +290,9 @@ const UpdateDoctor = ({ route }) => {
                     <Text style={styles.buttonText}>Pick an Image</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.updateButton} onPress={handleSubmit}>
+                <TouchableOpacity style={styles.updateButton} onPress={handleConfirmation}>
                     <Text style={styles.buttonText}>Update Doctor</Text>
                 </TouchableOpacity>
-
-                {loading && <ActivityIndicator style={styles.loadingIndicator} size="large" color="#9744be" />}
                 <View style={{ paddingBottom: 100 }}></View>
             </View>
         </ScrollView>

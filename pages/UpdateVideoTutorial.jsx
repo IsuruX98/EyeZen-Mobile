@@ -126,16 +126,16 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
                         setLoading(false);
                         Alert.alert(
                             'Success',
-                            'Tutorial added successfully.',
+                            'Tutorial updated successfully.',
                             [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                         );
                         navigation.navigate('AdminVideoTutorialList')
                     } catch (error) {
-                        console.log('Error adding Tutorial:', error);
+                        console.log('Error updating Tutorial:', error);
                         setLoading(false);
                         Alert.alert(
                             'Error',
-                            'There was an error adding the Tutorial. Please try again later.',
+                            'There was an error updating the Tutorial. Please try again later.',
                             [{text: 'OK', onPress: () => console.log('OK Pressed')}]
                         );
                     }
@@ -162,6 +162,25 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
 
     const dismissKeyboard = () => {
         Keyboard.dismiss();
+    };
+
+    const handleConfirmation = () => {
+        Alert.alert(
+            'Confirm Update',
+            'Are you sure you want to update this video tutorial?',
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'OK',
+                    onPress: () => handleSubmit(),
+                },
+            ],
+            { cancelable: false }
+        );
     };
 
     if (loading) {
@@ -213,7 +232,7 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
                 <TouchableOpacity style={styles.button} onPress={handleThumbnailUpload}>
                     <Text style={styles.buttonText}>Upload Thumbnail</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <TouchableOpacity style={styles.button} onPress={handleConfirmation}>
                     <Text style={styles.buttonText}>Update Video Tutorial</Text>
                 </TouchableOpacity>
             </View>

@@ -11,6 +11,7 @@ import {
     Alert,
 } from "react-native";
 import Axios from "../apis/axios";
+import {useFocusEffect} from "@react-navigation/native";
 
 const AdminDoctorList = ({ route, navigation }) => {
     const [doctorData, setDoctorData] = useState([]);
@@ -18,18 +19,28 @@ const AdminDoctorList = ({ route, navigation }) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        Axios.get("doctors")
-            .then((response) => {
-                setDoctorData(response.data);
-                setFilteredDoctors(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-                setLoading(false);
-            });
-    }, []);
+    const fetchDoctorData = async () => {
+        try {
+            const response = await Axios.get("doctors");
+            setDoctorData(response.data);
+            setFilteredDoctors(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching doctor data:", error);
+            setLoading(false);
+        }
+    };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            // Fetch data here
+            fetchDoctorData();
+
+            return () => {
+                // Clean up if necessary
+            };
+        }, [])
+    );
 
     useEffect(() => {
         if (searchQuery) {

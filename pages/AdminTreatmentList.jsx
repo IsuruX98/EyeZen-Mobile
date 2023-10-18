@@ -11,6 +11,7 @@ import {
     ActivityIndicator
 } from "react-native";
 import Axios from "../apis/axios";
+import { useFocusEffect } from '@react-navigation/native';
 
 const AdminTreatmentList = ({navigation}) => {
     const [treatmentData, setTreatmentData] = useState([]);
@@ -18,18 +19,28 @@ const AdminTreatmentList = ({navigation}) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        Axios.get("treatments")
-            .then((response) => {
-                setTreatmentData(response.data);
-                setFilteredTreatments(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("Error fetching treatment data:", error);
-                setLoading(false);
-            });
-    }, []);
+    const fetchTreatmentData = async () => {
+        try {
+            const response = await Axios.get("treatments");
+            setTreatmentData(response.data);
+            setFilteredTreatments(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching treatment data:", error);
+            setLoading(false);
+        }
+    };
+
+    useFocusEffect(
+        React.useCallback(() => {
+            // Fetch data here
+            fetchTreatmentData();
+
+            return () => {
+                // Clean up if necessary
+            };
+        }, [])
+    );
 
     useEffect(() => {
         if (searchQuery) {
