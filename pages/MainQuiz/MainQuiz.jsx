@@ -8,8 +8,8 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Data from "../assets/data";
-import ayurvedicsections from "../assets/quiz/mainquizHome.jpg";
+import Data from "../../assets/data";
+import quizHome from "../../assets/quiz/mainquizHome.jpg";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const MainQuizHome = () => {
@@ -71,7 +71,7 @@ const MainQuizHome = () => {
               <View style={styles.imageContainer}>
                 <Image
                   style={styles.image}
-                  source={ayurvedicsections}
+                  source={quizHome}
                   resizeMode="contain"
                 />
               </View>

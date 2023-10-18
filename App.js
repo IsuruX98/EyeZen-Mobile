@@ -23,7 +23,7 @@ import UpdateTreatment from "./pages/UpdateTreatments";
 import AddVideoTutorial from "./pages/AddVideoTutorial";
 import UpdateVideoTutorial from "./pages/UpdateVideoTutorial";
 import UpdateDoctor from "./pages/UpdateDoctor";
-import MainQuiz from "./tabs/MainQuiz";
+import MainQuiz from "./pages/MainQuiz/MainQuiz";
 
 const Stack = createNativeStackNavigator();
 
