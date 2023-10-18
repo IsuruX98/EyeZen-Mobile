@@ -25,6 +25,8 @@ import UpdateVideoTutorial from "./pages/UpdateVideoTutorial";
 import UpdateDoctor from "./pages/UpdateDoctor";
 import NearSightedTest from "./pages/NearSightedTest";
 import FarSightedTest from "./pages/FarSightedTest";
+import FarSightedResult from "./pages/FarSightedResult";
+import FarSightedResultFail from "./pages/FarSightedResultFail";
 
 const Stack = createNativeStackNavigator();
 
@@ -149,6 +151,16 @@ const App = () => {
               name="FarSightedTest"
               component={FarSightedTest}
               options={{ headerShown: false }}
+          />
+          <Stack.Screen
+              name = "ResultPage"
+              component={FarSightedResult}
+              options={{headerShown: false}}
+          />
+          <Stack.Screen
+              name = "FarSightedResultFail"
+              component={FarSightedResultFail}
+              options={{headerShown:false}}
           />
         </Stack.Navigator>
       </NavigationContainer>
