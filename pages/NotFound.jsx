@@ -38,15 +38,15 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   image: {
-    width: 400,
-    height: 400,
+    width: 300,
+    height: 300,
   },
   whoops: {
-    fontSize: 80,
+    fontSize: 60,
     marginBottom: 16,
   },
   message: {
-    fontSize: 30,
+    fontSize: 20,
     marginBottom: 5,
     textAlign: "center",
   },

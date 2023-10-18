@@ -8,11 +8,14 @@ const Questions = (props) => {
     Array(questions.length).fill(false)
   );
 
+  //get input ansers
   const [input, setInput] = useState([]);
 
+  //predefine answer array
   const answers = questions.map((item) => item.answer);
   let correctCount = 0;
 
+  //generate final score
   answers.forEach((value, index) => {
     if (value === input[index]) {
       correctCount = correctCount + 1;
@@ -35,28 +38,52 @@ const Questions = (props) => {
     props.next();
   };
 
-  return <View style={styles.container}></View>;
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>{questions[props.num].questions}</Text>
+      <View style={styles.buttonContainer}>
+        {questions[props.num].options.map((value, index) => (
+          <View key={index}>
+            <TouchableOpacity
+              onPress={() => selectBtn(value, index)}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>{value}</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
   header: {
     fontSize: 24,
     marginTop: 16,
     textAlign: "center",
+    height: 120,
   },
   buttonContainer: {
-    flexDirection: "row",
+    marginTop: 30,
+    flexDirection: "column",
     justifyContent: "space-between",
-    marginTop: 16,
   },
-  buttonWrapper: {
-    flex: 1,
-    marginHorizontal: 10,
+  button: {
+    flexBasis: "48%", // You can adjust this value to control button width
+    marginBottom: 8,
+    borderRadius: 10,
+    backgroundColor: "#004AAD",
+    padding: 10,
+  },
+  buttonText: {
+    fontSize: 24,
+    color: "white",
+    textAlign: "center",
   },
 });
 

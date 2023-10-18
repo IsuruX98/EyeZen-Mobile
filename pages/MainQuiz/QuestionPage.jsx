@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button as RNButton, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import Questions from "./Questions";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
+import axios from "../../apis/axios";
 
 const QuestionPage = () => {
   const navigation = useNavigation();
@@ -19,7 +27,7 @@ const QuestionPage = () => {
         setAllQuestions(response.data);
         setIsLoading(false);
       } catch (err) {
-        console.log(err.message);
+        console.log("error", err.message);
         setIsLoading(false);
       }
     };
@@ -35,7 +43,16 @@ const QuestionPage = () => {
     if (currentIndex < allquestions.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      navigation.navigate("MainQuizResults", { finalPercentage });
+      Alert.alert("Submit", "Submit Your Answers", [
+        {
+          text: "Submit",
+          onPress: () => {
+            navigation.navigate("QuizResults", { finalPercentage });
+          },
+          isPreferred: true,
+        },
+        { text: "Cancel", style: "cancel" },
+      ]);
     }
   };
 
@@ -43,69 +60,138 @@ const QuestionPage = () => {
   const onPrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
+    } else {
+      Alert.alert("You Cannot Go Back", "This is the First Question", [
+        { text: "OK" },
+      ]);
     }
   };
 
   // Exit button
   const onExitBtn = () => {
-    // Implement your exit logic here
+    Alert.alert("Are You Sure?", "Do You want to Exit From this Quiz?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          navigation.navigate("QuizResults", { finalPercentage });
+        },
+      },
+      { text: "No", style: "cancel" },
+    ]);
   };
 
   return (
-    <View style={styles.container}>
-      {isLoading ? (
-        <View>
-          <Text>Loading</Text>
-        </View>
-      ) : (
-        <>
+    <ScrollView>
+      <View style={styles.container}>
+        {isLoading ? (
           <View>
-            <Text style={styles.header}>{`Question ${currentIndex + 1} out of ${
-              allquestions.length
-            }`}</Text>
+            <ActivityIndicator
+              style={styles.loadingIndicator}
+              size="large"
+              color="#004AAD"
+            />
           </View>
-          <Questions
-            num={currentIndex}
-            onFinalPercentage={getFinalPercentage}
-            data={allquestions}
-            next={onNext}
-          />
-          <View style={styles.hr} />
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonWrapper}>
-              <RNButton title="Prev" onPress={onPrev} />
+        ) : (
+          <>
+            <View>
+              <Text style={styles.header}>{`Question ${
+                currentIndex + 1
+              } out of ${allquestions.length}`}</Text>
             </View>
-            <View style={styles.buttonWrapper}>
-              <RNButton title="Exit" color="red" onPress={onExitBtn} />
+            <Questions
+              num={currentIndex}
+              onFinalPercentage={getFinalPercentage}
+              data={allquestions}
+              next={onNext}
+            />
+            <View style={styles.hr} />
+            <View>
+              {currentIndex + 1 === allquestions.length ? (
+                <View style={styles.buttonContainer2}>
+                  <TouchableOpacity onPress={onPrev} style={styles.button1}>
+                    <Text style={styles.buttonText}>Prev</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={styles.buttonContainer}>
+                  <View>
+                    <TouchableOpacity onPress={onPrev} style={styles.button1}>
+                      <Text style={styles.buttonText}>Prev</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      onPress={onExitBtn}
+                      style={[styles.button1, styles.button2]}
+                    >
+                      <Text style={styles.buttonText}>Exit</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
             </View>
-          </View>
-        </>
-      )}
-    </View>
+          </>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 80,
   },
   header: {
     fontSize: 24,
+    fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 20,
   },
   hr: {
     height: 1,
     backgroundColor: "gray",
     opacity: 1,
+    marginTop: 20,
   },
+  loadingIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   buttonContainer: {
+    marginTop: 30,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginVertical: 10,
+    paddingHorizontal: 30,
   },
-  buttonWrapper: {
-    flex: 1,
+  buttonContainer2: {
+    marginTop: 30,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingHorizontal: 30,
+  },
+  button1: {
+    flexBasis: "48%", // You can adjust this value to control button width
+    marginBottom: 8,
+    borderRadius: 10,
+    backgroundColor: "#333333",
+    padding: 10,
+    width: 100,
+  },
+  button2: {
+    backgroundColor: "red",
+  },
+  button3: {
+    backgroundColor: "#004AAD",
+  },
+  buttonText: {
+    fontSize: 24,
+    color: "white",
+    textAlign: "center",
+    padding: 8,
   },
 });
 
