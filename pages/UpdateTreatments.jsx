@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, TouchableWithoutFeedback,Image } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Keyboard,
+    TouchableWithoutFeedback,
+    Image,
+    Alert, ActivityIndicator
+} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import axios from '../apis/axios';
+import axios from 'axios';
+import AxiosAPI from "../apis/axios";
 
-const UpdateTreatment = ({ route }) => {
+const UpdateTreatment = ({ route,navigation }) => {
     const { treatmentDetails } = route.params;
     const [treatmentInfo, setTreatmentInfo] = useState({
         title: treatmentDetails.title,
@@ -12,12 +23,15 @@ const UpdateTreatment = ({ route }) => {
         photoUrl: treatmentDetails.photoUrl,
     });
     const [loading, setLoading] = useState(false);
+    const [photo, setPhoto] = useState(null);
+
+    console.log(treatmentDetails.id)
 
     useEffect(() => {
         (async () => {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (status !== 'granted') {
-                console.log('Sorry, we need camera roll permissions to make this work!');
+                Alert.alert('Permission Required', 'Sorry, we need camera roll permissions to make this work!');
             }
         })();
     }, []);
@@ -29,10 +43,20 @@ const UpdateTreatment = ({ route }) => {
     const handleImageUpload = async () => {
         let result = await ImagePicker.launchImageLibraryAsync();
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
+            const selectedImageUri = result.assets[0].uri;
+            setTreatmentInfo({ ...treatmentInfo, photoUrl: selectedImageUri });
+            setPhoto(selectedImageUri);
+        }
+    };
+
+    const handleSubmit = async () => {
+        setLoading(true);
+
+        if (photo) {
             const formData = new FormData();
             formData.append('file', {
-                uri: result.uri,
+                uri: photo,
                 type: 'image/jpeg',
                 name: 'photo.jpg',
             });
@@ -45,39 +69,56 @@ const UpdateTreatment = ({ route }) => {
                 );
 
                 if (cloudinaryResponse.data && cloudinaryResponse.data.secure_url) {
+
                     setTreatmentInfo({ ...treatmentInfo, photoUrl: cloudinaryResponse.data.secure_url });
+
+                        try {
+                            const response = await AxiosAPI.put(`treatments/${treatmentDetails._id}`, treatmentInfo);
+                            console.log('Backend response:', response.data);
+                            setLoading(false);
+                            Alert.alert(
+                                'Success',
+                                'Treatment Updated successfully.',
+                                [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                            );
+                            navigation.navigate('AdminTreatmentList')
+                        } catch (error) {
+                            console.log('Error Updating treatment:', error);
+                            setLoading(false);
+                            Alert.alert(
+                                'Error',
+                                'There was an error Updating the treatment. Please try again later.',
+                                [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                            );
+                        }
+
+
+
                 } else {
                     console.log('Image upload failed.');
                 }
             } catch (error) {
                 console.log('Error uploading image:', error);
+                Alert.alert(
+                    'Image Upload Failed',
+                    'There was an error uploading your image. Please try again later.',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                );
             }
-        }
-    };
-
-    const handleSubmit = async () => {
-        setLoading(true);
-
-        try {
-            // Send updated data to your API endpoint
-            const response = await axios.put(`treatments/${treatmentDetails.id}`, treatmentInfo);
-
-            // Handle the response from the backend
-            console.log('Backend response:', response.data);
-
-            // Show success message to the user
-            console.log('Treatment updated successfully.');
-        } catch (error) {
-            // Handle error
-            console.log('Error updating treatment:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
     const dismissKeyboard = () => {
         Keyboard.dismiss();
     };
+
+    if (loading) {
+        return (
+            <View style={styles.loaderContainer}>
+                <ActivityIndicator size="large" color="#007BFF"/>
+            </View>
+        );
+    }
 
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -123,6 +164,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
     image: {
         width: 300,
