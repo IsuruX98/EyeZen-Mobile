@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Video } from 'expo-av';
 import { useRoute, useNavigation } from "@react-navigation/native";
-import Axios from "../apis/axios";
+import Axios from "../../apis/axios";
 
 const AyurvedicVideo = () => {
     const route = useRoute();

@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
-import hero from '../assets/home.png';
-import doctorContactImage from "../assets/ayurvrdic/doctorcontact.png";
-import Faq from "../components/Faq";
+import hero from '../../assets/home.png';
+import doctorContactImage from "../../assets/ayurvrdic/doctorcontact.png";
+import Faq from "../../components/Faq";
 
 const AdminHome = ({navigation}) => {
 

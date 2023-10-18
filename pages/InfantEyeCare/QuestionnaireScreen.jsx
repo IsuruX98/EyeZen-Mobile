@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native';
-import axios from '../apis/axios';
-import ayurvedicsections from "../assets/ayurvrdic/ayurvedicsections.png";
+import axios from '../../apis/axios';
+import ayurvedicsections from "../../assets/ayurvrdic/ayurvedicsections.png";
 
 const QuestionnaireScreen = ({ navigation }) => {
     const [questions, setQuestions] = useState([]);
