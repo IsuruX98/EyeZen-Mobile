@@ -25,8 +25,6 @@ const UpdateTreatment = ({ route,navigation }) => {
     const [loading, setLoading] = useState(false);
     const [photo, setPhoto] = useState(null);
 
-    console.log(treatmentDetails.id)
-
     useEffect(() => {
         (async () => {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();

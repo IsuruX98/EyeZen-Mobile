@@ -26,6 +26,8 @@ import UpdateDoctor from "./pages/UpdateDoctor";
 import MainQuiz from "./pages/MainQuiz/MainQuiz";
 import TestsHome from "./pages/EyeTests/TestsHome";
 import TestsAndGames from "./tabs/TestsAndGames";
+import ViewQuiz from "./pages/ViewQuiz";
+import CreateQuizQuestion from "./pages/CreateQuizQuestion";
 
 const Stack = createNativeStackNavigator();
 
@@ -139,6 +141,16 @@ const App = () => {
         <Stack.Screen
           name="UpdateDoctor"
           component={UpdateDoctor}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ViewQuiz"
+          component={ViewQuiz}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreateQuizQuestion"
+          component={CreateQuizQuestion}
           options={{ headerShown: false }}
         />
         <Stack.Screen
