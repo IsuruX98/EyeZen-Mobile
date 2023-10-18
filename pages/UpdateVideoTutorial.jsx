@@ -7,13 +7,21 @@ import {
     StyleSheet,
     Keyboard,
     TouchableWithoutFeedback,
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import axios from '../apis/axios';
+import axios from 'axios';
+import AxiosAPI from '../apis/axios'
+import { Video } from 'expo-av';
 
-const UpdateVideoTutorial = ({ route }) => {
+const UpdateVideoTutorial = ({ route,navigation }) => {
     const { videoTutorialDetails } = route.params;
     const [loading, setLoading] = useState(false);
+    const [photo, setPhoto] = useState(null);
+    const [selectedImageUri, setSelectedImageUri] = useState(null);
+    const [video, setVideo] = useState(null);
+    const [selectedVideoUri, setSelectedVideoUri] = useState(videoTutorialDetails.videoUrl);
     const [videoUrl, setVideoUrl] = useState(videoTutorialDetails.videoUrl);
     const [thumbnailUrl, setThumbnailUrl] = useState(videoTutorialDetails.thumbnailUrl);
 
@@ -21,7 +29,22 @@ const UpdateVideoTutorial = ({ route }) => {
         title: videoTutorialDetails.title,
         type: videoTutorialDetails.type,
         description: videoTutorialDetails.description,
+        videoUrl: videoTutorialDetails.videoUrl,
+        thumbnailUrl: videoTutorialDetails.thumbnailUrl
     });
+
+    useEffect(() => {
+        (async () => {
+            const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert(
+                    'Permission Required',
+                    'Sorry, we need camera roll permissions to make this work!',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                );
+            }
+        })();
+    }, []);
 
     const handleInputChange = (name, value) => {
         setVideoTutorialInfo({ ...videoTutorialInfo, [name]: value });
@@ -30,88 +53,109 @@ const UpdateVideoTutorial = ({ route }) => {
     const handleVideoUpload = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+            allowsEditing: true,
+            quality: 1,
         });
 
-        if (!result.cancelled) {
-            const formData = new FormData();
-            formData.append('file', {
-                uri: result.uri,
-                type: 'video/mp4',
-                name: 'video.mp4',
-            });
-            formData.append('upload_preset', 'upload');
-
-            try {
-                const response = await axios.post(
-                    'https://api.cloudinary.com/v1_1/dpgelkpd4/video/upload',
-                    formData
-                );
-
-                if (response.data && response.data.secure_url) {
-                    setVideoUrl(response.data.secure_url);
-                } else {
-                    console.log('Video upload failed.');
-                }
-            } catch (error) {
-                console.log('Error uploading video:', error);
-            }
+        if (!result.canceled) {
+            const selectedVideoUri = result.assets[0].uri;
+            setSelectedVideoUri(selectedVideoUri);
+            // This variable is not defined anywhere in your code.
+            // You should use selectedVideoUri instead of selectedImageUri.
+            setVideoTutorialInfo({...videoTutorialInfo, videoUrl: selectedVideoUri});
+            setVideo(selectedVideoUri);
         }
     };
 
     const handleThumbnailUpload = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
         });
 
-        if (!result.cancelled) {
-            const formData = new FormData();
-            formData.append('file', {
-                uri: result.uri,
-                type: 'image/jpeg',
-                name: 'thumbnail.jpg',
-            });
-            formData.append('upload_preset', 'upload');
-
-            try {
-                const response = await axios.post(
-                    'https://api.cloudinary.com/v1_1/dpgelkpd4/image/upload',
-                    formData
-                );
-
-                if (response.data && response.data.secure_url) {
-                    setThumbnailUrl(response.data.secure_url);
-                } else {
-                    console.log('Thumbnail upload failed.');
-                }
-            } catch (error) {
-                console.log('Error uploading thumbnail:', error);
-            }
+        if (!result.canceled) {
+            const selectedImageUri = result.assets[0].uri;
+            setVideoTutorialInfo({...videoTutorialInfo,thumbnailUrl:selectedImageUri})
+            setPhoto(selectedImageUri);
         }
     };
 
+
     const handleSubmit = async () => {
-        if (!videoTutorialInfo.title || !videoTutorialInfo.type || !videoTutorialInfo.description) {
-            console.log('Title, Type, and Description are required fields.');
-            return;
-        }
+        setLoading(true);
 
-        const updatedVideoTutorialInfo = {
-            ...videoTutorialInfo,
-            videoUrl: videoUrl,
-            thumbnailUrl: thumbnailUrl,
-        };
+        if (photo && video) {
+            const thumbnailFormData = new FormData();
+            thumbnailFormData.append('file', {
+                uri: photo,
+                type: 'image/jpeg',
+                name: 'photo.jpg',
+            });
+            thumbnailFormData.append('upload_preset', 'upload');
 
-        try {
-            setLoading(true);
+            const videoFormData = new FormData();
+            videoFormData.append('file', {
+                uri: video,
+                type: 'video/mp4', // Modify the type based on the video format
+                name: 'video.mp4',
+            });
+            videoFormData.append('upload_preset', 'upload');
 
-            const response = await axios.put(`videoTutorial/${videoTutorialDetails.id}`, updatedVideoTutorialInfo);
+            try {
+                // Upload thumbnail to Cloudinary
+                const thumbnailResponse = await axios.post(
+                    'https://api.cloudinary.com/v1_1/dpgelkpd4/image/upload',
+                    thumbnailFormData
+                );
 
-            console.log('Backend response:', response.data);
+                // Upload video to Cloudinary
+                const videoResponse = await axios.post(
+                    'https://api.cloudinary.com/v1_1/dpgelkpd4/video/upload',
+                    videoFormData
+                );
 
-            console.log('Video tutorial updated successfully.');
-        } catch (error) {
-            console.log('Error updating video tutorial:', error);
-        } finally {
+                if (thumbnailResponse.data.secure_url && videoResponse.data.secure_url) {
+
+                    setVideoTutorialInfo({...videoTutorialInfo,thumbnailUrl: thumbnailResponse.data.secure_url,})
+                    setVideoTutorialInfo({...videoTutorialInfo, videoUrl: videoResponse.data.secure_url});
+
+                    try {
+                        const response = await AxiosAPI.put(`videoTutorial/${videoTutorialDetails._id}`, videoTutorialInfo);
+                        console.log('Backend response:', response.data);
+                        setLoading(false);
+                        Alert.alert(
+                            'Success',
+                            'Tutorial added successfully.',
+                            [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                        );
+                        navigation.navigate('AdminVideoTutorialList')
+                    } catch (error) {
+                        console.log('Error adding Tutorial:', error);
+                        setLoading(false);
+                        Alert.alert(
+                            'Error',
+                            'There was an error adding the Tutorial. Please try again later.',
+                            [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                        );
+                    }
+                } else {
+                    console.log('Image or video upload failed.');
+                }
+            } catch (error) {
+                console.log('Error uploading image or video:', error);
+                Alert.alert(
+                    'Upload Failed',
+                    'There was an error uploading the image or video. Please try again later.',
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+                );
+            }
+        } else {
+            Alert.alert(
+                'Incomplete Data',
+                'Please upload both the video and the thumbnail before submitting.',
+                [{text: 'OK', onPress: () => console.log('OK Pressed')}]
+            );
             setLoading(false);
         }
     };
@@ -120,10 +164,30 @@ const UpdateVideoTutorial = ({ route }) => {
         Keyboard.dismiss();
     };
 
+    if (loading) {
+        return (
+            <View style={styles.loaderContainer}>
+                <ActivityIndicator size="large" color="#007BFF"/>
+            </View>
+        );
+    }
+
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
             <View style={styles.container}>
                 <Text style={styles.headerText}>Update Video Tutorial</Text>
+                {selectedVideoUri && (
+                    <Video
+                        source={{ uri: selectedVideoUri }}
+                        rate={1.0}
+                        volume={1.0}
+                        isMuted={false}
+                        resizeMode="cover"
+                        shouldPlay={false}
+                        useNativeControls
+                        style={{ width: 330, height: 200,marginBottom:25 }} // Set the desired dimensions for the video
+                    />
+                )}
                 <TextInput
                     style={styles.input}
                     placeholder="Title"
@@ -164,6 +228,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
     headerText: {
         color: '#004AAD',
