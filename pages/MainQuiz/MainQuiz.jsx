@@ -63,7 +63,7 @@ const MainQuizHome = () => {
 
               <TouchableOpacity
                 style={styles.startButton}
-                onPress={() => navigation.navigate("MainQuestions")}
+                onPress={() => navigation.navigate("MainQuizPage")}
               >
                 <Text style={styles.startButtonText}>Start Quiz</Text>
               </TouchableOpacity>

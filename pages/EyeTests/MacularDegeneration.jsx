@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 
-import Ishihara from "../../assets/eyetests/Ishihara_00.jpg";
+import Macular from "../../assets/eyetests/macular.jpg";
 
 const MacularDegeneration = ({ navigation }) => {
   return (
@@ -36,7 +36,7 @@ const MacularDegeneration = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.imageContainer}>
-          <Image source={Ishihara} style={styles.image} resizeMode="contain" />
+          <Image source={Macular} style={styles.image} resizeMode="contain" />
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
