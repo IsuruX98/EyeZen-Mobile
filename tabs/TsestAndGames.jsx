@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from "react-native";
 const TestsAndGames = ({navigation}) => {
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text>Tests & Games Screen</Text>
+            <Text style={styles.heading}>Tests & Games</Text>
             <View>
                 <TouchableOpacity style={styles.button}
                                   onPress={() => {
@@ -67,7 +67,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
-
+    heading:{
+        fontSize : 24
+    }
 });
 
 
