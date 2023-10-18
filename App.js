@@ -24,6 +24,8 @@ import AddVideoTutorial from "./pages/AddVideoTutorial";
 import UpdateVideoTutorial from "./pages/UpdateVideoTutorial";
 import UpdateDoctor from "./pages/UpdateDoctor";
 import MainQuiz from "./pages/MainQuiz/MainQuiz";
+import TestsHome from "./pages/EyeTests/TestsHome";
+import TestsAndGames from "./tabs/TestsAndGames";
 
 const Stack = createNativeStackNavigator();
 
@@ -142,6 +144,11 @@ const App = () => {
         <Stack.Screen
           name="MainQuiz"
           component={MainQuiz}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TestsHome"
+          component={TestsHome}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
