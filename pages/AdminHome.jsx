@@ -68,10 +68,10 @@ const AdminHome = ({navigation}) => {
             <TouchableOpacity
                 style={styles.button}
                 onPress={() => {
-                    // Handle button click
+                    navigation.navigate('ViewQuiz');
                 }}
             >
-                <Text style={styles.buttonText}>Infant Quize</Text>
+                <Text style={styles.buttonText}>Infant Quizs</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
