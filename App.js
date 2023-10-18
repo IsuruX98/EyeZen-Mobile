@@ -25,9 +25,14 @@ import UpdateVideoTutorial from "./pages/UpdateVideoTutorial";
 import UpdateDoctor from "./pages/UpdateDoctor";
 import MainQuiz from "./pages/MainQuiz/MainQuiz";
 import TestsHome from "./pages/EyeTests/TestsHome";
-import TestsAndGames from "./tabs/TestsAndGames";
 import ViewQuiz from "./pages/ViewQuiz";
 import CreateQuizQuestion from "./pages/CreateQuizQuestion";
+import ColorBlind from "./pages/EyeTests/ColorBlind";
+
+import NotFound from "./pages/NotFound";
+import ColorBlindTest from "./pages/EyeTests/Checkups/ColorBlindTest";
+import MacularDegeneration from "./pages/EyeTests/MacularDegeneration";
+import MacularTest from "./pages/EyeTests/Checkups/MacularTest";
 
 const Stack = createNativeStackNavigator();
 
@@ -161,6 +166,31 @@ const App = () => {
         <Stack.Screen
           name="TestsHome"
           component={TestsHome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ColorBlind"
+          component={ColorBlind}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MacularDegeneration"
+          component={MacularDegeneration}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MacularDegenerationTest"
+          component={MacularTest}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ColorBlindTest"
+          component={ColorBlindTest}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="*"
+          component={NotFound}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

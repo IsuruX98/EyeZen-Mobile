@@ -3,8 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import doctorContactImage from "../assets/ayurvrdic/doctorcontact.png";
 import { useNavigation } from "@react-navigation/native";
 
-const DoctorContact = ({navigation}) => {
-
+const DoctorContact = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 130,
     borderRadius: 5,
-    marginHorizontal: 10,
     alignItems: "center",
   },
   buttonText: {
