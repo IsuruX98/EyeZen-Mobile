@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity,ActivityIndicator } from "react-native";
-import { WebView } from "react-native-webview";
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Video } from 'expo-av';
 import { useRoute, useNavigation } from "@react-navigation/native";
 import Axios from "../apis/axios";
 
@@ -18,7 +18,7 @@ const AyurvedicVideo = () => {
         Axios.get("videoTutorial")
             .then((response) => {
                 setVideoData(response.data);
-                setLoading(false)
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching data:", error);
@@ -31,7 +31,7 @@ const AyurvedicVideo = () => {
     useEffect(() => {
         if (video) {
             setVideoUrl(video.videoUrl);
-            setLoading(false)
+            setLoading(false);
         }
     }, [video]);
 
@@ -54,15 +54,18 @@ const AyurvedicVideo = () => {
     return (
         <View style={styles.container}>
             <View style={styles.videoContainer}>
-                {/* Embed the video player using WebView from react-native-webview */}
-                <WebView
+                {/* Use Expo AV's Video component to play the video */}
+                <Video
                     source={{ uri: videoUrl }}
+                    rate={1.0}
+                    volume={1.0}
+                    isMuted={false}
+                    resizeMode="cover"
+                    shouldPlay
+                    useNativeControls
                     style={styles.videoPlayer}
                 />
             </View>
-            <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
-                <Text style={styles.buttonText}>Go Back</Text>
-            </TouchableOpacity>
         </View>
     );
 };
@@ -70,13 +73,15 @@ const AyurvedicVideo = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#ffffff",
         padding: 16,
-        backgroundColor: "#fff",
+        justifyContent: "center",
     },
     videoContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: 20,
     },
     loadingContainer: {
         flex: 1,
@@ -85,18 +90,18 @@ const styles = StyleSheet.create({
     },
     videoPlayer: {
         width: "100%",
-        height: 200, // You can adjust the height based on your preference
+        aspectRatio: 16 / 9, // Aspect ratio for widescreen videos
+        borderRadius: 10,
     },
     goBackButton: {
         backgroundColor: "#007BFF",
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 24,
         borderRadius: 8,
-        marginBottom: 80,
         alignSelf: "center",
     },
     buttonText: {
-        color: "#fff",
+        color: "#ffffff",
         fontSize: 16,
         fontWeight: "bold",
     },

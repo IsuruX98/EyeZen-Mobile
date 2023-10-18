@@ -58,7 +58,15 @@ const AdminDoctorList = ({ route, navigation }) => {
             {
                 text: "Delete",
                 onPress: () => {
-
+                    Axios.delete(`doctors/${email}`)
+                        .then(() => {
+                            setDoctorData((prevData) =>
+                                prevData.filter((doctor) => doctor.email !== email)
+                            );
+                        })
+                        .catch((error) => {
+                            console.error("Error deleting Doctor:", error);
+                        });
                 },
                 style: "destructive",
             },
