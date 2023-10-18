@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Linking, StyleSheet, Image, ActivityIndicator } from "react-native";
 import DoctorLocationModal from "./DoctorPin";
-import Axios from "../apis/axios";
+import Axios from "../../apis/axios";
 
 const DoctorDetails = ({ route }) => {
     const { email } = route.params;

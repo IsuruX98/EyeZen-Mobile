@@ -8,7 +8,7 @@ import {
     ScrollView,
     StyleSheet, ActivityIndicator,
 } from 'react-native';
-import axios from '../apis/axios';
+import axios from '../../apis/axios';
 
 const CreateQuizQuestion = ({navigation}) => {
     const [question, setQuestion] = useState('');

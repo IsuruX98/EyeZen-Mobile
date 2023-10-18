@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
-import AxiosAPI from "../apis/axios";
+import AxiosAPI from "../../apis/axios";
 
 const UpdateTreatment = ({ route,navigation }) => {
     const { treatmentDetails } = route.params;

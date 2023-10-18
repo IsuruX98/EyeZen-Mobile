@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from "react-native";
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator, Alert} from "react-native";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 
@@ -9,21 +9,20 @@ const Login = ({ navigation }) => {
     const [loading, setLoading] = useState(false); // Add loading state
 
     const handleLogin = async () => {
-
-        if (email === "admin@gmail.com" && password === "1234"){
+        if (email === "admin@gmail.com" && password === "1234") {
             navigation.navigate('Admin');
-        }else{
-        try {
-            setLoading(true); // Set loading to true when login starts
-            await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
-            // If login is successful, navigate to the Home screen
-            navigation.navigate('EyeZen');
-        } catch (error) {
-            console.error(error.message);
-            // Handle login errors (display error messages, etc.)
-        } finally {
-            setLoading(false); // Set loading to false when login operation is done (success or error)
-        }
+        } else {
+            try {
+                setLoading(true); // Set loading to true when login starts
+                await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
+                // If login is successful, navigate to the Home screen
+                navigation.navigate('EyeZen');
+            } catch (error) {
+                // Handle login errors (display error messages, etc.)
+                Alert.alert("Error", error.message); // Show Firebase error message in an alert
+            } finally {
+                setLoading(false); // Set loading to false when login operation is done (success or error)
+            }
         }
     };
 
