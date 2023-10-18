@@ -1,53 +1,44 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import ayurvedicsections from "../assets/ayurvrdic/ayurvedicsections.png";
+import TestHome from "../assets/testHome.jpg";
 
-const EyeCareSections = ({ navigation }) => {
+const TestsAndGames = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.header}>Eye Care Sections</Text>
+        <Text style={styles.header}>Tests And Games</Text>
         <Text style={styles.description}>In this section</Text>
         <Text style={styles.paragraph}>
-          Explore specialized eye care services tailored for different needs.
-          From Ayurvedic remedies for holistic vision wellness to specialized
-          infant eye care designed for the youngest members of your family, find
-          the perfect solutions to nurture your vision.
+          Discover a world of interactive tests and engaging games designed to
+          enhance your eye health and visual acuity. Whether you're looking to
+          assess your vision, improve eye coordination, or simply have fun while
+          caring for your eyes, our diverse range of tests and games offers the
+          ideal solutions for all ages. From comprehensive vision tests to
+          entertaining eye exercises, explore our collection and embark on a
+          journey to nurture and enhance your vision.
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("MainQuiz");
+              navigation.navigate("TestsHome");
             }}
           >
-            <Text style={styles.buttonText}>Main Quiz</Text>
+            <Text style={styles.buttonText}>Eye Checkup Tests</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("AyurvedicEyeCareHome");
+              navigation.navigate("TestsHome");
             }}
           >
-            <Text style={styles.buttonText}>Ayurvedic Eye Care</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("InfantQuizHome");
-            }}
-          >
-            <Text style={styles.buttonText}>Infant Eye Care</Text>
+            <Text style={styles.buttonText}>Games For Kids</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={ayurvedicsections}
-          resizeMode="contain"
-        />
+        <Image style={styles.image} source={TestHome} resizeMode="contain" />
       </View>
     </View>
   );
@@ -108,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EyeCareSections;
+export default TestsAndGames;
