@@ -70,12 +70,13 @@ const styles = {
   },
   title: {
     fontSize: 32,
-    color: "blue",
+    color: "#004AAD",
+    fontWeight:"900",
     textTransform: "uppercase",
   },
   instructionsContainer: {
     marginLeft: 10,
-    marginTop: 10,
+    marginTop: 20,
   },
   instructionTitle: {
     fontSize: 24,
@@ -106,20 +107,18 @@ const styles = {
     width: "100%",
   },
   button: {
-    flexBasis: "48%",
-    marginBottom: 8,
-    borderRadius: 10,
+    alignSelf: "center",
+    marginTop: 15,
+    width: "95%",
     backgroundColor: "#004AAD",
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonText: {
-    fontSize: 24,
     color: "white",
-    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 };
 

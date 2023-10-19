@@ -38,7 +38,7 @@ const TestsAndGames = ({ navigation }) => {
       </View>
 
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={TestHome} resizeMode="contain" />
+        <Image style={styles.image} source={TestHome} resizeMode="cover" />
       </View>
     </View>
   );
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     paddingTop: 10,
+    paddingHorizontal:15
   },
   buttonContainer: {
     marginTop: 20,
@@ -91,10 +92,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal:15
   },
   image: {
     width: "100%",
-    height: "90%",
+    height: "80%",
     borderRadius: 20,
   },
 });

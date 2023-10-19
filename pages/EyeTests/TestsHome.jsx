@@ -28,12 +28,7 @@ const TestsHome = ({ navigation }) => {
           <Text style={styles.header}>Tests for Eye Diseases</Text>
           <Text style={styles.description}>In this section...</Text>
           <Text style={styles.paragraph}>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius id
-            inventore repudiandae, ad nam mollitia expedita a maxime! Mollitia
-            rerum, officiis soluta labore, tempore quasi deleniti id rem,
-            similique ratione quisquam. Rerum ab, repellat accusamus commodi
-            totam voluptates iusto unde voluptatum iure, necessitatibus eveniet
-            odit ipsum ullam tempora inventore. Sequi?
+            Experience hassle-free eye health assessments with our intuitive mobile app. Detect common eye issues and diseases effortlessly from your smartphone. Quick, accurate, and user-friendly tests ensure you stay on top of your eye health. Your vision matters – start your test today!
           </Text>
         </View>
 
@@ -62,7 +57,7 @@ const TestsHome = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingTop: 80,
   },
   headerContainer: {
@@ -88,37 +83,41 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 16,
-    marginBottom: 20,
+    marginTop: 10,
+    marginBottom: 30,
     textAlign: "center",
+    paddingHorizontal:15
   },
   imageContainer: {
     flex: 1,
     marginBottom: 10,
+    paddingHorizontal:15
   },
   image: {
     width: "100%",
     height: "100%",
+    borderRadius:20,
     aspectRatio: 1.5,
   },
   buttonContainer: {
+    paddingTop:10,
+    paddingBottom:40,
     flexDirection: "column",
     justifyContent: "space-between",
   },
   button: {
-    flexBasis: "48%",
-    marginBottom: 8,
-    borderRadius: 10,
+    alignSelf: "center",
+    marginTop: 15,
+    width: "95%",
     backgroundColor: "#004AAD",
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonText: {
-    fontSize: 24,
     color: "white",
-    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 80,
+    paddingTop: 100,
   },
   gridContainer: {
     flexDirection: "row",
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 40,
+    fontWeight:"900",
     textAlign: "center",
   },
   headerColored: {
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 16,
     marginTop: 16,
+    paddingHorizontal:15,
     textAlign: "center",
   },
   buttonContainer: {
@@ -92,20 +94,18 @@ const styles = StyleSheet.create({
     aspectRatio: 1.5,
   },
   button: {
-    flexBasis: "48%",
-    marginBottom: 8,
-    borderRadius: 10,
+    alignSelf: "center",
+    marginTop: 15,
+    width: "95%",
     backgroundColor: "#004AAD",
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonText: {
-    fontSize: 24,
     color: "white",
-    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 
