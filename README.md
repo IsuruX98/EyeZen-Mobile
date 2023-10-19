@@ -35,7 +35,20 @@ EyeZen is the result of collaborative efforts from a team of passionate individu
 
 ## Screenshots
 
-## Getting Started
+![IMG_8474](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/f9ad7596-de35-4116-943e-f81dd568dcf1)
+
+![IMG_8475](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/f19c9f89-feaf-47d1-8ac1-6fb9a20d45c3)
+
+![IMG_8477](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/a1cbd28c-10ab-4b22-a895-41567a1d9da0)
+
+![IMG_8478](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/5844fdcd-eb40-4d49-887e-ddea19f11faa)
+
+![IMG_8479](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/e1263215-9b64-4abc-aea1-902a1a080de8)
+
+![IMG_8480](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/23c4ea93-f1a5-412f-b9f6-c0310b8654a2)
+
+
+## Getting Started with the app
 
 ### Prerequisites
 Before you begin, ensure you have the following installed on your system:
