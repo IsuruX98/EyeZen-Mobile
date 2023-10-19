@@ -41,8 +41,8 @@ const ColorBlindTest = () => {
           </Text>
         </View>
         <Text style={styles.disclaimer}>
-          The tests that we propose do not have a medical value, and we remind
-          you that only your optometrist can give a proper diagnostic.
+          ** The tests that we propose do not have a medical value, and we remind
+          you that only your optometrist can give a proper diagnostic. **
         </Text>
         <View style={styles.buttonsContainer}>
           <View style={styles.button}>
@@ -70,12 +70,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+    fontWeight:"900",
     color: "#004AAD",
     textTransform: "uppercase",
   },
   instructionsContainer: {
     marginLeft: 10,
-    marginTop: 10,
+    marginTop: 20,
   },
   instructionTitle: {
     fontSize: 24,
@@ -98,6 +99,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   disclaimer: {
+    marginTop:15,
+    paddingHorizontal:15,
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
@@ -109,20 +112,18 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   button: {
-    flexBasis: "48%",
-    marginBottom: 8,
-    borderRadius: 10,
+    alignSelf: "center",
+    marginTop: 15,
+    width: "95%",
     backgroundColor: "#004AAD",
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonText: {
-    fontSize: 24,
     color: "white",
-    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
   resultBottom: {
     fontSize: 20,

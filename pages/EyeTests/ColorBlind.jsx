@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 80,
+    paddingTop:100
   },
   gridContainer: {
     flexDirection: "row",
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    fontWeight:"900",
     fontSize: 40,
     textAlign: "center",
   },
@@ -87,24 +88,22 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "100%",
+    height: "120%",
     aspectRatio: 1.5,
   },
   button: {
-    flexBasis: "48%",
-    marginBottom: 8,
-    borderRadius: 10,
+    alignSelf: "center",
+    marginTop: 15,
+    width: "95%",
     backgroundColor: "#004AAD",
-    padding: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
   },
   buttonText: {
-    fontSize: 24,
     color: "white",
-    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 
-import Error from "../assets/404.jpg";
+import Error from "../assets/404.png";
 
 const NotFound = ({ navigation }) => {
   const notFoundImage = Error;
