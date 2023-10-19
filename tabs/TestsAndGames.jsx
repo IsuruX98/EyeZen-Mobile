@@ -29,7 +29,7 @@ const TestsAndGames = ({ navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("TestsHome");
+              navigation.navigate("GameHome");
             }}
           >
             <Text style={styles.buttonText}>Games For Kids</Text>

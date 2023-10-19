@@ -25,9 +25,19 @@ import UpdateVideoTutorial from "./pages/Admin/UpdateVideoTutorial";
 import UpdateDoctor from "./pages/Admin/UpdateDoctor";
 import MainQuiz from "./pages/MainQuiz/MainQuiz";
 import TestsHome from "./pages/EyeTests/TestsHome";
-import TestsAndGames from "./tabs/TestsAndGames";
+import ColorBlind from "./pages/EyeTests/ColorBlind";
+import NotFound from "./pages/NotFound";
+import ColorBlindTest from "./pages/EyeTests/Checkups/ColorBlindTest";
+import MacularDegeneration from "./pages/EyeTests/MacularDegeneration";
+import MacularTest from "./pages/EyeTests/Checkups/MacularTest";
 import ViewQuiz from "./pages/Admin/ViewQuiz";
 import CreateQuizQuestion from "./pages/Admin/CreateQuizQuestion";
+import QuestionPage from "./pages/MainQuiz/QuestionPage";
+import QuizResults from "./pages/MainQuiz/QuizResults";
+import GameHome from "./pages/KidGames/GameHome";
+import CreateMainQuestions from "./pages/Admin/CreateMainQuestions";
+import ViewAllMainQuestions from "./pages/Admin/ViewAllMainQuestions";
+import UpdateMainQuestion from "./pages/Admin/UpdateMainQuestion";
 
 const Stack = createNativeStackNavigator();
 
@@ -161,6 +171,61 @@ const App = () => {
         <Stack.Screen
           name="TestsHome"
           component={TestsHome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ColorBlind"
+          component={ColorBlind}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MacularDegeneration"
+          component={MacularDegeneration}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MacularDegenerationTest"
+          component={MacularTest}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ColorBlindTest"
+          component={ColorBlindTest}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="*"
+          component={NotFound}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MainQuizPage"
+          component={QuestionPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="QuizResults"
+          component={QuizResults}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GameHome"
+          component={GameHome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreateMainQuestions"
+          component={CreateMainQuestions}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ViewMainQuestions"
+          component={ViewAllMainQuestions}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UpdateAllQuestions"
+          component={UpdateMainQuestion}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
