@@ -28,8 +28,8 @@ const Register = ({ navigation }) => {
             // Navigate to Home screen after successful registration
             navigation.navigate('Login');
         } catch (error) {
-            console.error(error.message);
             // Handle registration errors (display error messages, etc.)
+            Alert.alert("Error", error.message); // Display an alert for Firebase errors
         } finally {
             setLoading(false);
         }

@@ -1,46 +1,44 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import doctorContactImage from "../assets/ayurvrdic/doctorcontact.png";
-import { useNavigation } from "@react-navigation/native";
+import TestHome from "../assets/testHome.jpg";
 
-const DoctorContact = ({ navigation }) => {
+const TestsAndGames = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.header}>Doctor Contact</Text>
+        <Text style={styles.header}>Tests And Games</Text>
         <Text style={styles.description}>In this section</Text>
         <Text style={styles.paragraph}>
-          Discover the perfect eye care specialist here! Explore our list of
-          trusted doctors, view their profiles for expertise and patient
-          reviews, and find their locations on our convenient map. Your journey
-          to healthier vision begins now.
+          Discover a world of interactive tests and engaging games designed to
+          enhance your eye health and visual acuity. Whether you're looking to
+          assess your vision, improve eye coordination, or simply have fun while
+          caring for your eyes, our diverse range of tests and games offers the
+          ideal solutions for all ages. From comprehensive vision tests to
+          entertaining eye exercises, explore our collection and embark on a
+          journey to nurture and enhance your vision.
         </Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("DoctorList");
+              navigation.navigate("TestsHome");
             }}
           >
-            <Text style={styles.buttonText}>Doctor List</Text>
+            <Text style={styles.buttonText}>Eye Checkup Tests</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("Map");
+              navigation.navigate("GameHome");
             }}
           >
-            <Text style={styles.buttonText}>View Map</Text>
+            <Text style={styles.buttonText}>Games For Kids</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={doctorContactImage}
-          resizeMode="contain"
-        />
+        <Image style={styles.image} source={TestHome} resizeMode="cover" />
       </View>
     </View>
   );
@@ -71,6 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     paddingTop: 10,
+    paddingHorizontal:15
   },
   buttonContainer: {
     marginTop: 20,
@@ -79,8 +78,9 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#004AAD",
     paddingVertical: 10,
-    paddingHorizontal: 130,
+    paddingHorizontal: 100,
     borderRadius: 5,
+    marginHorizontal: 10,
     alignItems: "center",
   },
   buttonText: {
@@ -92,12 +92,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal:15
   },
   image: {
     width: "100%",
-    height: "90%",
+    height: "80%",
     borderRadius: 20,
   },
 });
 
-export default DoctorContact;
+export default TestsAndGames;

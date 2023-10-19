@@ -18,6 +18,14 @@ const EyeCareSections = ({ navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
+              navigation.navigate("MainQuiz");
+            }}
+          >
+            <Text style={styles.buttonText}>Main Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
               navigation.navigate("AyurvedicEyeCareHome");
             }}
           >
@@ -80,7 +88,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 100,
     borderRadius: 5,
-    marginHorizontal: 10,
     alignItems: "center",
   },
   buttonText: {
