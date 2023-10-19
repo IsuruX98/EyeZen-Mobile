@@ -22,8 +22,15 @@ const CreateMainQuestions = () => {
   const [Option2, setOption2] = useState("");
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(false);
-  const toggleSwitch1 = () => setIsEnabled1((previousState) => !previousState);
-  const toggleSwitch2 = () => setIsEnabled2((previousState) => !previousState);
+  const toggleSwitch1 = () => {
+    setIsEnabled1(true);
+    setIsEnabled2(false);
+  };
+
+  const toggleSwitch2 = () => {
+    setIsEnabled1(false);
+    setIsEnabled2(true);
+  };
 
   // Send data to the database
   const handleSubmit = async () => {
@@ -114,7 +121,6 @@ const CreateMainQuestions = () => {
             onValueChange={toggleSwitch1}
             value={isEnabled1}
             style={styles.switch}
-            disabled={isEnabled2}
           />
           <Text
             style={[
@@ -138,7 +144,6 @@ const CreateMainQuestions = () => {
             onValueChange={toggleSwitch2}
             value={isEnabled2}
             style={styles.switch}
-            disabled={isEnabled1}
           />
           <Text
             style={[
