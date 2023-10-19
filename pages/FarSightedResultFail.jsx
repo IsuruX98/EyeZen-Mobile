@@ -25,6 +25,12 @@ const FarSightedResultFail = ({navigation}) => {
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={fail} resizeMode="contain" />
             </View>
+            <View style={styles.button}>
+                <TouchableOpacity onPress={() => navigation.navigate("TestsHome")}>
+                    <Text style={styles.buttonText}>Try Another Test</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     );
 };
@@ -57,25 +63,29 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#004AAD",
-        marginTop: 20,
+        marginTop: 0,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginBottom: 30
+
     },
     buttonText: {
         color: "white",
         fontSize: 18,
         fontWeight: "bold",
+        textAlign: "center"
     },
     imageContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        padding: 20,
+
+
     },
     image: {
-        width: 350,
-        height: "90%",
+        width: 460,
+        height: "80%",
         borderRadius: 20,
     },
 });

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 // import hero from "../../assets/home.png";
 import doctorContactImage from "../../assets/ayurvrdic/doctorcontact.png";
+
 // import Faq from "../../components/Faq";
 
 const AdminHome = ({ navigation }) => {
@@ -67,12 +68,13 @@ const AdminHome = ({ navigation }) => {
           navigation.navigate("ViewQuiz");
         }}
       >
-        <Text style={styles.buttonText}>Infant Quizs</Text>
+        <Text style={styles.buttonText}>Infant Quizes</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
           // Handle button click
+            navigation.navigate("AddText");
         }}
       >
         <Text style={styles.buttonText}>Add Text for sighted Test</Text>

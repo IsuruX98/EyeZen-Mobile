@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Home from "../tabs/Home";
-import TestsAndGames from "../tabs/TsestAndGames";
+import TestsAndGames from "../tabs/TestsAndGames";
 import EyeCareSections from "../tabs/EyeCareSections";
 import DoctorContact from "../tabs/DoctorContact";
 import Profile from "../tabs/Profile";

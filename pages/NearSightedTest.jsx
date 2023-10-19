@@ -1,25 +1,25 @@
-import React from "react";
-import {Text, TouchableOpacity, View, Linking} from "react-native";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-import Axios from "../apis/axios";
-const NearSightedTest = ({navigation}) => {
-
-    const openExternalLink = () => {
-        const externalURL = 'https://eyezen-dw61jxx57-isurux98s-projects.vercel.app/near-sighted'; // Replace this with your external link
-        Linking.openURL(externalURL)
-            .catch((err) => console.error('An error occurred', err));
-    };
-
+const FarSightedResult = () => {
     return (
-        <View style={{flex : 1, justifyContent:'center', alignContent: 'center'}}>
-            <TouchableOpacity
-                onPress={externalURL}
-            >
-            <Text>hi</Text>
-            </TouchableOpacity>
+        <View style={styles.container}>
+            <WebView
+                source={{ uri: 'https://eyezen-dw61jxx57-isurux98s-projects.vercel.app/near-test-view' }} // Replace with your desired website URL
+                style={styles.webview}
+            />
         </View>
-    )
+    );
+};
 
-}
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    webview: {
+        flex: 1,
+    },
+});
 
-export default NearSightedTest;
+export default FarSightedResult;

@@ -25,6 +25,11 @@ const FarSightedResult = ({navigation}) => {
             <View style={styles.imageContainer}>
                 <Image style={styles.image} source={pass} resizeMode="contain" />
             </View>
+            <View style={styles.button}>
+                <TouchableOpacity onPress={() => navigation.navigate("TestsHome")}>
+                    <Text style={styles.buttonText}>Try Another Test</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -61,6 +66,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
+        marginBottom: 30
     },
     buttonText: {
         color: "white",
