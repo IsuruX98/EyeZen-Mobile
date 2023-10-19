@@ -75,6 +75,7 @@ const QuestionPage = () => {
         onPress: () => {
           navigation.navigate("QuizResults", { finalPercentage });
         },
+        style: "destructive",
       },
       { text: "No", style: "cancel" },
     ]);
