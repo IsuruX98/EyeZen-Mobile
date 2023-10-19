@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext, useRef} from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet, ScrollView} from 'react-native';
 import hero from '../../assets/home.png';
 import doctorContactImage from "../../assets/ayurvrdic/doctorcontact.png";
@@ -6,8 +6,16 @@ import Faq from "../../components/Faq";
 
 const AdminHome = ({navigation}) => {
 
+    const scrollViewRef = useRef(null); // Create a ref for ScrollView
+
+    const scroll = () => {
+        if (scrollViewRef.current) {
+            scrollViewRef.current.scrollTo({ y: 900, animated: true }); // Adjust the value based on your layout
+        }
+    };
+
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView ref={scrollViewRef} style={styles.container}>
             <View style={styles.textContainer}>
                 <Text style={styles.header}>Welcome</Text>
                 <Text style={styles.subHeader}>Admin</Text>
@@ -17,9 +25,7 @@ const AdminHome = ({navigation}) => {
             </View>
             <TouchableOpacity
                 style={styles.button1}
-                onPress={() => {
-                    // Handle button press logic here
-                }}
+                onPress={scroll}
             >
                 <Text style={styles.buttonText1}>Get Started</Text>
             </TouchableOpacity>
