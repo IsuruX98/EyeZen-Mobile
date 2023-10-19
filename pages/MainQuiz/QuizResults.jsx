@@ -126,7 +126,7 @@ const QuizResults = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 50,
+    padding: 30,
     justifyContent: "space-around",
     marginTop: 20,
   },
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     height: "40%",
     aspectRatio: 1.5,
     alignSelf: "center",
+    marginTop: 50,
   },
 });
 
