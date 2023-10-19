@@ -34,6 +34,7 @@ import ViewQuiz from "./pages/Admin/ViewQuiz";
 import CreateQuizQuestion from "./pages/Admin/CreateQuizQuestion";
 import QuestionPage from "./pages/MainQuiz/QuestionPage";
 import QuizResults from "./pages/MainQuiz/QuizResults";
+import GameHome from "./pages/KidGames/GameHome";
 
 const Stack = createNativeStackNavigator();
 
@@ -202,6 +203,11 @@ const App = () => {
         <Stack.Screen
           name="QuizResults"
           component={QuizResults}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GameHome"
+          component={GameHome}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

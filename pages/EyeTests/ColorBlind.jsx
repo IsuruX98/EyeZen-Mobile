@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 
-import Ishihara from "../../assets/eyetests/Ishihara_00.jpg";
+import Ishihara from "../../assets/eyetests/Ishihara_00.png";
 
 const ColorBlind = ({ navigation }) => {
   return (

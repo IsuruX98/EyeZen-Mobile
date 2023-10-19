@@ -13,9 +13,9 @@ const diseases = [
   { path: "NearSighted", name: "Myopia" },
   { path: "FarSighted", name: "Far-sighted" },
   { path: "ColorBlind", name: "Color Blindness" },
+  { path: "MacularDegeneration", name: "Macular Degeneration" },
   { path: "*", name: "Contrast Sensitivity" },
   { path: "*", name: "Depth Precision" },
-  { path: "MacularDegeneration", name: "Macular Degeneration" },
 ];
 
 const TestsHome = ({ navigation }) => {
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    flexBasis: "48%", // You can adjust this value to control button width
+    flexBasis: "48%",
     marginBottom: 8,
     borderRadius: 10,
     backgroundColor: "#004AAD",

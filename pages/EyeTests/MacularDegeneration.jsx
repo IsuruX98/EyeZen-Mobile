@@ -42,7 +42,7 @@ const MacularDegeneration = ({ navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("ColorBlindTest");
+              navigation.navigate("MacularDegenerationTest");
             }}
           >
             <Text style={styles.buttonText}>Start Test</Text>
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     justifyContent: "center",
-    marginTop: 16,
   },
   imageContainer: {
     flex: 1,

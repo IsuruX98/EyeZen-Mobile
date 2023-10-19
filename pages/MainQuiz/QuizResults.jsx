@@ -26,10 +26,6 @@ const QuizResults = () => {
     // to generate PDF documents in React Native.
   };
 
-  const openDoctorContact = () => {
-    navigation.navigate("DoctorList"); // Navigate to the doctor contact screen
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -111,7 +107,7 @@ const QuizResults = () => {
               <Text style={styles.buttonText}>Print Results</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={openDoctorContact}>
+          <TouchableOpacity onPress={() => navigation.navigate("DoctorList")}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>Book an Appointment</Text>
             </View>
