@@ -11,15 +11,7 @@ const FarSightedResult = ({navigation}) => {
                 <Text style={styles.description}>
                     No need to contact a Ophthalmologists
                 </Text>
-                {/*<TouchableOpacity*/}
-                {/*    style={styles.button}*/}
-                {/*    onPress={() => {*/}
-                {/*        // Handle button press logic here*/}
-                {/*        navigation.navigate("");*/}
-                {/*    }}*/}
-                {/*>*/}
-                {/*    <Text style={styles.buttonText}>Try Again?</Text>*/}
-                {/*</TouchableOpacity>*/}
+
             </View>
 
             <View style={styles.imageContainer}>
