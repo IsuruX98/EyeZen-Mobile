@@ -35,17 +35,17 @@ EyeZen is the result of collaborative efforts from a team of passionate individu
 
 ## Screenshots
 
-![IMG_8474](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/f9ad7596-de35-4116-943e-f81dd568dcf1)
+![IMG_8474](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/ae8fc32b-d91f-4899-8702-4191f0d909b2)
 
-![IMG_8475](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/f19c9f89-feaf-47d1-8ac1-6fb9a20d45c3)
+![IMG_8475](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/68173373-9d20-4778-9a6b-90935925cd5d)
 
-![IMG_8477](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/a1cbd28c-10ab-4b22-a895-41567a1d9da0)
+![IMG_8477](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/7d30d120-10fd-4a1a-8f35-6908ec686f0e)
 
-![IMG_8478](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/5844fdcd-eb40-4d49-887e-ddea19f11faa)
+![IMG_8478](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/8cac96e8-78bb-4029-a143-dfcad4cf237c)
 
-![IMG_8479](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/e1263215-9b64-4abc-aea1-902a1a080de8)
+![IMG_8479](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/db31d1f2-f517-4a14-b40d-703a1340feae)
 
-![IMG_8480](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/23c4ea93-f1a5-412f-b9f6-c0310b8654a2)
+![IMG_8480](https://github.com/IsuruX98/EyeZen-Mobile/assets/104721314/b69dba78-fffb-4749-8e35-4bb6cf66df16)
 
 
 ## Getting Started with the app
