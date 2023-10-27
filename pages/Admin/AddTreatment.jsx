@@ -53,6 +53,12 @@ const AddTreatment = ({navigation}) => {
     };
 
     const handleSubmit = async () => {
+
+        if (!treatmentInfo.title || !treatmentInfo.type || !treatmentInfo.description || !photo) {
+            Alert.alert('Error', 'Please fill out all fields and select an image.');
+            return;
+        }
+
         setLoading(true);
 
         if (photo) {

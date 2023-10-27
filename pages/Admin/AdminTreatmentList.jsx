@@ -8,7 +8,9 @@ import {
     Text,
     StyleSheet,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    Keyboard,
+    TouchableWithoutFeedback,
 } from "react-native";
 import Axios from "../../apis/axios";
 import { useFocusEffect } from '@react-navigation/native';
@@ -84,6 +86,10 @@ const AdminTreatmentList = ({navigation}) => {
         );
     };
 
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
     if (loading) {
         return (
             <View style={styles.loaderContainer}>
@@ -93,6 +99,7 @@ const AdminTreatmentList = ({navigation}) => {
     }
 
     return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.container}>
             <Text style={styles.headerText}>Treatment List</Text>
             <TextInput
@@ -137,6 +144,7 @@ const AdminTreatmentList = ({navigation}) => {
                 )}
             />
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 

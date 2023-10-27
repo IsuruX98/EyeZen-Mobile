@@ -1,40 +1,72 @@
-import React, { useState, useEffect } from "react";
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ActivityIndicator, Alert} from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../firebaseConfig";
+import React, {useState, useEffect} from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Image,
+    ActivityIndicator,
+    Alert,
+    Keyboard,
+    TouchableWithoutFeedback,
+} from "react-native";
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {FIREBASE_AUTH} from "../firebaseConfig";
 
-const Login = ({ navigation }) => {
+const Login = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false); // Add loading state
 
     const handleLogin = async () => {
-        if (email === "admin@gmail.com" && password === "1234") {
-            navigation.navigate('Admin');
-        } else {
-            try {
-                setLoading(true); // Set loading to true when login starts
+        if (email.trim() === '' || password.trim() === '') {
+            Alert.alert("Error", "Please enter both email and password.");
+            return;
+        }
+
+        if (!email.includes('@') || !email.includes('.')) {
+            Alert.alert("Error", "Invalid email address.");
+            return;
+        }
+
+        if (password.length < 6) {
+            Alert.alert("Error", "Password must be at least 6 characters long.");
+            return;
+        }
+
+        try {
+            setLoading(true); // Set loading to true when login starts
+            if (email === "admin@gmail.com" && password === "123456") {
+                navigation.navigate('Admin');
+            } else {
                 await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
                 // If login is successful, navigate to the Home screen
                 navigation.navigate('EyeZen');
-            } catch (error) {
-                // Handle login errors (display error messages, etc.)
-                Alert.alert("Error", error.message); // Show Firebase error message in an alert
-            } finally {
-                setLoading(false); // Set loading to false when login operation is done (success or error)
             }
+        } catch (error) {
+            // Handle login errors (display error messages, etc.)
+            Alert.alert("Error", error.message); // Show Firebase error message in an alert
+        } finally {
+            setLoading(false); // Set loading to false when login operation is done (success or error)
         }
     };
+
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
 
     if (loading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" color="#007BFF" />
+                <ActivityIndicator size="large" color="#007BFF"/>
             </View>
         );
     }
 
     return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.container}>
             <Image
                 source={require('../assets/logo.png')}
@@ -68,6 +100,7 @@ const Login = ({ navigation }) => {
                 <Text style={styles.signupText}>Don't have an account? Sign Up</Text>
             </TouchableOpacity>
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -76,7 +109,7 @@ const styles = StyleSheet.create({
         flex: 1, justifyContent: "center", alignItems: "center", padding: 40,
     }, logo: {
         width: 300,
-        height:200
+        height: 200
 
 
     }, input: {
@@ -87,7 +120,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingLeft: 10,
         borderRadius: 10,
-    },forgotPassword: {
+    }, forgotPassword: {
         width: "100%",
         alignItems: "flex-end",
         marginBottom: 24,
