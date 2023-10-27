@@ -7,7 +7,10 @@ import {
     TouchableOpacity,
     Text,
     StyleSheet,
-    Alert, ActivityIndicator,
+    Alert,
+    ActivityIndicator,
+    Keyboard,
+    TouchableWithoutFeedback,
 } from "react-native";
 import Axios from "../../apis/axios";
 import { useFocusEffect } from '@react-navigation/native';
@@ -84,6 +87,10 @@ const AdminVideoTutorialList = ({navigation}) => {
         );
     };
 
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
     if (loading) {
         return (
             <View style={styles.loaderContainer}>
@@ -93,6 +100,7 @@ const AdminVideoTutorialList = ({navigation}) => {
     }
 
     return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.container}>
             <Text style={styles.headerText}>Video Tutorials</Text>
             <TextInput
@@ -137,6 +145,7 @@ const AdminVideoTutorialList = ({navigation}) => {
                 )}
             />
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 

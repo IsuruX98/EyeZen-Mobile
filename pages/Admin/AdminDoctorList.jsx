@@ -9,6 +9,8 @@ import {
     ActivityIndicator,
     StyleSheet,
     Alert,
+    Keyboard,
+    TouchableWithoutFeedback,
 } from "react-native";
 import Axios from "../../apis/axios";
 import {useFocusEffect} from "@react-navigation/native";
@@ -84,6 +86,10 @@ const AdminDoctorList = ({ route, navigation }) => {
         ]);
     };
 
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
     if (loading) {
         return (
             <View style={styles.loaderContainer}>
@@ -93,6 +99,7 @@ const AdminDoctorList = ({ route, navigation }) => {
     }
 
     return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.container}>
             <Text style={styles.headerText}>Doctor List</Text>
             <TextInput
@@ -137,6 +144,7 @@ const AdminDoctorList = ({ route, navigation }) => {
                 )}
             />
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 
