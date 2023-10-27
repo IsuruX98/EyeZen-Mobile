@@ -72,6 +72,12 @@ const AddVideoTutorial = () => {
     };
 
     const handleSubmit = async () => {
+
+        if (!videoTutorialInfo.title || !videoTutorialInfo.type || !videoTutorialInfo.description || !video || !photo) {
+            Alert.alert('Error', 'Please fill out all fields and select an video and a thumbnail image.');
+            return;
+        }
+
         setLoading(true);
 
         if (photo && video) {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator,Alert  } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../firebaseConfig";
 import { doc, setDoc } from "firebase/firestore";
@@ -13,6 +13,26 @@ const Register = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
 
     const handleRegister = async () => {
+        if (name.trim() === '' || email.trim() === '' || mobile.trim() === '' || password.trim() === '' || confirmPassword.trim() === '') {
+            Alert.alert("Error", "Please fill out all fields.");
+            return;
+        }
+
+        if (!email.includes('@') || !email.includes('.')) {
+            Alert.alert("Error", "Invalid email address.");
+            return;
+        }
+
+        if (password.length < 6) {
+            Alert.alert("Error", "Password must be at least 6 characters long.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            Alert.alert("Error", "Passwords do not match.");
+            return;
+        }
+
         try {
             setLoading(true);
             const userCredential = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
@@ -21,7 +41,7 @@ const Register = ({ navigation }) => {
             // Store user data in Firestore using email as the document ID
             await setDoc(doc(FIRESTORE_DB, 'users', userEmail), {
                 name: name,
-                email: userEmail, // Store the email as a field (optional)
+                email: userEmail,
                 mobile: mobile,
             });
 

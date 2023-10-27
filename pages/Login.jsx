@@ -9,22 +9,38 @@ const Login = ({ navigation }) => {
     const [loading, setLoading] = useState(false); // Add loading state
 
     const handleLogin = async () => {
-        if (email === "admin@gmail.com" && password === "1234") {
-            navigation.navigate('Admin');
-        } else {
-            try {
-                setLoading(true); // Set loading to true when login starts
+        if (email.trim() === '' || password.trim() === '') {
+            Alert.alert("Error", "Please enter both email and password.");
+            return;
+        }
+
+        if (!email.includes('@') || !email.includes('.')) {
+            Alert.alert("Error", "Invalid email address.");
+            return;
+        }
+
+        if (password.length < 6) {
+            Alert.alert("Error", "Password must be at least 6 characters long.");
+            return;
+        }
+
+        try {
+            setLoading(true); // Set loading to true when login starts
+            if (email === "admin@gmail.com" && password === "1234") {
+                navigation.navigate('Admin');
+            } else {
                 await signInWithEmailAndPassword(FIREBASE_AUTH, email, password);
                 // If login is successful, navigate to the Home screen
                 navigation.navigate('EyeZen');
-            } catch (error) {
-                // Handle login errors (display error messages, etc.)
-                Alert.alert("Error", error.message); // Show Firebase error message in an alert
-            } finally {
-                setLoading(false); // Set loading to false when login operation is done (success or error)
             }
+        } catch (error) {
+            // Handle login errors (display error messages, etc.)
+            Alert.alert("Error", error.message); // Show Firebase error message in an alert
+        } finally {
+            setLoading(false); // Set loading to false when login operation is done (success or error)
         }
     };
+
 
     if (loading) {
         return (

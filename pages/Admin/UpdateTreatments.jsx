@@ -51,6 +51,22 @@ const UpdateTreatment = ({ route,navigation }) => {
     const handleSubmit = async () => {
         setLoading(true);
 
+        // Validate empty fields
+        const requiredFields = ['title', 'type', 'description', 'photoUrl'];
+        const errorFields = requiredFields.filter(field => !treatmentInfo[field]);
+        if (errorFields.length > 0) {
+            setLoading(false);
+            Alert.alert('Error', 'Please fill out all fields.');
+            return;
+        }
+
+        // Validate title (only letters and spaces allowed)
+        if (!/^[a-zA-Z\s]*$/.test(treatmentInfo.title)) {
+            setLoading(false);
+            Alert.alert('Error', 'Invalid title. Title can only contain letters and spaces.');
+            return;
+        }
+
         if (photo) {
             const formData = new FormData();
             formData.append('file', {
