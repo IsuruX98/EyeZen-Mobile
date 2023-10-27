@@ -16,6 +16,7 @@ const diseases = [
   { path: "MacularDegeneration", name: "Macular Degeneration" },
   { path: "*", name: "Contrast Sensitivity" },
   { path: "*", name: "Depth Precision" },
+
 ];
 
 const TestsHome = ({ navigation }) => {
