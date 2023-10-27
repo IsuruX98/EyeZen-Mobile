@@ -85,6 +85,12 @@ const UpdateVideoTutorial = ({ route,navigation }) => {
     const handleSubmit = async () => {
         setLoading(true);
 
+        if (!videoTutorialInfo.title || !videoTutorialInfo.type || !videoTutorialInfo.description) {
+            Alert.alert("Error", "Please fill out all fields.");
+            setLoading(false);
+            return;
+        }
+
         if (photo && video) {
             const thumbnailFormData = new FormData();
             thumbnailFormData.append('file', {

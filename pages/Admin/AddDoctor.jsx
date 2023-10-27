@@ -71,6 +71,44 @@ const DoctorForm = () => {
     };
 
     const handleSubmit = async () => {
+
+        if (!doctorInfo.name || !doctorInfo.email || !doctorInfo.mobile || !doctorInfo.specialization || !doctorInfo.type || !doctorInfo.town || !doctorInfo.latitude || !doctorInfo.longitude || !doctorInfo.about || !doctorInfo.qualifications || !doctorInfo.experience || !doctorInfo.servicesOffered || !doctorInfo.officeHours || !doctorInfo.acceptedPaymentMethods || !photo) {
+            Alert.alert("Error", "Please fill out all fields and select an image.");
+            return;
+        }
+
+        // Validate name (only letters and spaces allowed)
+        if (!/^[a-zA-Z\s]*$/.test(doctorInfo.name)) {
+            Alert.alert("Error", "Invalid name. Name can only contain letters and spaces.");
+            return;
+        }
+
+        // Validate email format
+        if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(doctorInfo.email)) {
+            Alert.alert("Error", "Invalid email address.");
+            return;
+        }
+
+        // Validate mobile number format (10 digits)
+        if (!/^[0-9]{10}$/.test(doctorInfo.mobile)) {
+            Alert.alert("Error", "Invalid mobile number. Please enter a 10-digit mobile number.");
+            return;
+        }
+
+        // Validate latitude (between -90 and 90)
+        const latitude = parseFloat(doctorInfo.latitude);
+        if (isNaN(latitude) || latitude < -90 || latitude > 90) {
+            Alert.alert("Error", "Invalid latitude. Latitude must be between -90 and 90.");
+            return;
+        }
+
+        // Validate longitude (between -180 and 180)
+        const longitude = parseFloat(doctorInfo.longitude);
+        if (isNaN(longitude) || longitude < -180 || longitude > 180) {
+            Alert.alert("Error", "Invalid longitude. Longitude must be between -180 and 180.");
+            return;
+        }
+
         setLoading(true);
 
         if (photo) {
