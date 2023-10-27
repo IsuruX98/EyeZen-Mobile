@@ -6,7 +6,7 @@ const FarSightedResult = () => {
     return (
         <View style={styles.container}>
             <WebView
-                source={{ uri: 'https://eyezen.vercel.app/near-test-view' }} // Replace with your desired website URL
+                source={{ uri: 'https://eyezen.vercel.app/test-inst' }} // Replace with your desired website URL
                 style={styles.webview}
             />
         </View>
