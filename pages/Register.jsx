@@ -1,10 +1,20 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator,Alert  } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH, FIRESTORE_DB } from "../firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import React, {useState} from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    ActivityIndicator,
+    Alert,
+    Keyboard,
+    TouchableWithoutFeedback,
+} from "react-native";
+import {createUserWithEmailAndPassword} from "firebase/auth";
+import {FIREBASE_AUTH, FIRESTORE_DB} from "../firebaseConfig";
+import {doc, setDoc} from "firebase/firestore";
 
-const Register = ({ navigation }) => {
+const Register = ({navigation}) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState('');
@@ -55,15 +65,20 @@ const Register = ({ navigation }) => {
         }
     };
 
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
     if (loading) {
         return (
             <View style={styles.container}>
-                <ActivityIndicator size="large" color="#007BFF" />
+                <ActivityIndicator size="large" color="#007BFF"/>
             </View>
         );
     }
 
     return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.container}>
             <Text style={styles.heading}>Register</Text>
             <TextInput
@@ -107,6 +122,7 @@ const Register = ({ navigation }) => {
                 <Text style={styles.signInText}>Already have an account? Sign In</Text>
             </TouchableOpacity>
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 
@@ -117,11 +133,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 40,
     },
-    heading:{
+    heading: {
         fontWeight: "900",
-        fontSize:50,
-        marginBottom:50,
-        color:"#004AAD"
+        fontSize: 50,
+        marginBottom: 50,
+        color: "#004AAD"
     },
     input: {
         height: 40,
@@ -134,7 +150,7 @@ const styles = StyleSheet.create({
     },
 
     registerButton: {
-        marginTop:20,
+        marginTop: 20,
         backgroundColor: "#004AAD",
         padding: 15,
         width: "100%",
@@ -145,7 +161,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
     },
-    signInText:{
+    signInText: {
         marginTop: 20, color: "#333333", fontWeight: "bold",
     }
 });
